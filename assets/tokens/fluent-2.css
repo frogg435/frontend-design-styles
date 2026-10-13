@@ -1,0 +1,283 @@
+/* ==========================================================================
+   Microsoft Fluent 2 (Windows 11 / Microsoft 365) — 设计令牌
+   来源：Fluent 2 官方 Design Tokens + Fluent UI React v9 webLightTheme / webDarkTheme
+   用法：单独使用时把 [data-style="fluent"] 替换为 :root 或 html
+   暗色切换：<div data-style="fluent" data-theme="dark">
+   品牌色替换：用 createLightTheme(myBrandRamp) 生成 16 档色阶后覆盖 --fl-brand-* 系列
+   ========================================================================== */
+
+[data-style="fluent"] {
+  /* ---------- 中性色（亮色） ---------- */
+  --fl-neutral-bg1: #FFFFFF;
+  --fl-neutral-bg2: #FAFAFA;
+  --fl-neutral-bg3: #F5F5F5;
+  --fl-neutral-bg4: #F0F0F0;
+  --fl-neutral-bg5: #EBEBEB;
+  --fl-neutral-bg6: #E6E6E6;
+  --fl-neutral-bg-disabled: #F0F0F0;
+  --fl-neutral-bg-inverted: #292929;
+
+  --fl-neutral-fg1: #242424;
+  --fl-neutral-fg2: #424242;
+  --fl-neutral-fg3: #616161;
+  --fl-neutral-fg4: #707070;
+  --fl-neutral-fg-disabled: #BDBDBD;
+  --fl-neutral-fg-on-brand: #FFFFFF;
+  --fl-neutral-fg-inverted: #FFFFFF;
+
+  --fl-neutral-stroke1: #D1D1D1;
+  --fl-neutral-stroke2: #E0E0E0;
+  --fl-neutral-stroke3: #F0F0F0;
+  --fl-neutral-stroke-accessible: #616161;
+  --fl-neutral-stroke-disabled: #E0E0E0;
+
+  /* 细微背景（Subtle / hover 态） */
+  --fl-subtle-bg: transparent;
+  --fl-subtle-bg-hover: #F5F5F5;
+  --fl-subtle-bg-pressed: #E0E0E0;
+  --fl-subtle-bg-selected: #EBEBEB;
+
+  /* ---------- 品牌色（亮色，Microsoft Blue 默认） ---------- */
+  --fl-brand: #0F6CBD;
+  --fl-brand-hover: #115EA3;
+  --fl-brand-pressed: #0C3B5E;
+  --fl-brand-selected: #0F548C;
+  --fl-brand-fg1: #0F6CBD;
+  --fl-brand-fg2: #115EA3;
+  --fl-brand-fg-link: #0F6CBD;
+  --fl-brand-stroke1: #0F6CBD;
+  --fl-brand-subtle-bg: #EBF3FC;
+  --fl-brand-subtle-bg-hover: #D3E4F5;
+  --fl-compound-brand-bg: #0F6CBD;
+
+  /* 16 档品牌色阶（供 createLightTheme 使用，蓝色示例） */
+  --fl-brand-10: #020305;  --fl-brand-40: #1B2E54;  --fl-brand-80: #4F72B8;   --fl-brand-120: #B1CCF2;
+  --fl-brand-20: #0D1525;  --fl-brand-50: #24427C;  --fl-brand-90: #6E8FD3;   --fl-brand-130: #C7DAF9;
+  --fl-brand-30: #14203A;  --fl-brand-60: #2E549E;  --fl-brand-100: #87A8E6;  --fl-brand-140: #DCECFB;
+  --fl-brand-70: #3A68B8;  --fl-brand-110: #9CBCF0; --fl-brand-160: #FAFCFF;
+
+  /* ---------- 状态色 ---------- */
+  --fl-status-danger-bg: #C50F1F;
+  --fl-status-danger-fg: #B10E1C;
+  --fl-status-danger-subtle: #FDF3F4;
+  --fl-status-success-bg: #107C10;
+  --fl-status-success-fg: #0E700E;
+  --fl-status-success-subtle: #F1FAF1;
+  --fl-status-warning-bg: #DA3B01;
+  --fl-status-warning-fg: #BC4B09;
+  --fl-status-warning-subtle: #FFF9F5;
+  --fl-status-info-bg: #0078D4;
+  --fl-status-info-fg: #0067B8;
+  --fl-status-info-subtle: #F5FAFF;
+
+  /* ---------- 材质 ---------- */
+  --fl-mica-bg: rgba(243, 243, 243, 0.85);
+  --fl-mica-alt-bg: rgba(243, 243, 243, 0.90);
+  --fl-acrylic-bg: rgba(252, 252, 252, 0.60);
+  --fl-acrylic-inapp-bg: rgba(252, 252, 252, 0.60);
+  --fl-smoke-bg: rgba(0, 0, 0, 0.30);
+  --fl-blur-mica: blur(60px) saturate(125%);
+  --fl-blur-acrylic: blur(30px) saturate(125%);
+  --fl-blur-acrylic-thin: blur(60px) saturate(125%);
+
+  /* ---------- 字体 ---------- */
+  --fl-font-display: "Segoe UI Variable Display", "Segoe UI", "Microsoft YaHei",
+                     "PingFang SC", system-ui, sans-serif;
+  --fl-font: "Segoe UI Variable Text", "Segoe UI", "Microsoft YaHei",
+             "PingFang SC", system-ui, sans-serif;
+  --fl-font-mono: "Cascadia Code", "Cascadia Mono", Consolas, ui-monospace, monospace;
+
+  /* ---------- Type Ramp ---------- */
+  --fl-display: 68px;      --fl-display-lh: 92px;
+  --fl-large-title: 40px;  --fl-large-title-lh: 52px;
+  --fl-title1: 32px;       --fl-title1-lh: 40px;
+  --fl-title2: 28px;       --fl-title2-lh: 36px;
+  --fl-title3: 24px;       --fl-title3-lh: 32px;
+  --fl-subtitle1: 20px;    --fl-subtitle1-lh: 28px;
+  --fl-subtitle2: 16px;    --fl-subtitle2-lh: 22px;
+  --fl-body1: 14px;        --fl-body1-lh: 20px;
+  --fl-body2: 12px;        --fl-body2-lh: 16px;
+  --fl-caption1: 12px;     --fl-caption1-lh: 16px;
+  --fl-caption2: 10px;     --fl-caption2-lh: 14px;
+
+  /* 原始字号令牌 */
+  --fl-font-size-100: 10px;  --fl-line-height-100: 14px;
+  --fl-font-size-200: 12px;  --fl-line-height-200: 16px;
+  --fl-font-size-300: 14px;  --fl-line-height-300: 20px;
+  --fl-font-size-400: 16px;  --fl-line-height-400: 22px;
+  --fl-font-size-500: 20px;  --fl-line-height-500: 28px;
+  --fl-font-size-600: 24px;  --fl-line-height-600: 32px;
+  --fl-font-size-700: 28px;  --fl-line-height-700: 36px;
+  --fl-font-size-800: 32px;  --fl-line-height-800: 40px;
+  --fl-font-size-900: 40px;  --fl-line-height-900: 52px;
+  --fl-font-size-1000: 68px; --fl-line-height-1000: 92px;
+
+  --fl-weight-regular: 400;
+  --fl-weight-medium: 500;
+  --fl-weight-semibold: 600;
+  --fl-weight-bold: 700;
+  --fl-tracking-cjk: 0;
+  --fl-tracking-latin: -0.01em;
+
+  /* ---------- 间距（横纵各一套，值相同） ---------- */
+  --fl-space-none: 0;
+  --fl-space-xxs: 2px;
+  --fl-space-xs: 4px;
+  --fl-space-s-nudge: 6px;
+  --fl-space-s: 8px;
+  --fl-space-m-nudge: 10px;
+  --fl-space-m: 12px;
+  --fl-space-l: 16px;
+  --fl-space-xl: 20px;
+  --fl-space-xxl: 24px;
+  --fl-space-xxxl: 32px;
+
+  /* ---------- 圆角（嵌套每次 −2px） ---------- */
+  --fl-radius-none: 0;
+  --fl-radius-small: 2px;
+  --fl-radius-medium: 4px;    /* 控件 */
+  --fl-radius-large: 6px;     /* 卡片 */
+  --fl-radius-xlarge: 8px;    /* 对话框 / Flyout / 窗口 */
+  --fl-radius-circular: 10000px;
+
+  /* ---------- 阴影（双层：主阴影 + 环境光） ---------- */
+  --fl-shadow-2: 0 1px 2px rgba(0,0,0,0.14), 0 0 2px rgba(0,0,0,0.12);
+  --fl-shadow-4: 0 2px 4px rgba(0,0,0,0.14), 0 0 2px rgba(0,0,0,0.12);
+  --fl-shadow-8: 0 4px 8px rgba(0,0,0,0.14), 0 0 2px rgba(0,0,0,0.12);
+  --fl-shadow-16: 0 8px 16px rgba(0,0,0,0.14), 0 0 2px rgba(0,0,0,0.12);
+  --fl-shadow-28: 0 14px 28px rgba(0,0,0,0.24), 0 0 8px rgba(0,0,0,0.20);
+  --fl-shadow-64: 0 32px 64px rgba(0,0,0,0.24), 0 0 8px rgba(0,0,0,0.20);
+
+  /* ---------- 动效 ---------- */
+  --fl-duration-ultra-fast: 50ms;
+  --fl-duration-faster: 100ms;
+  --fl-duration-fast: 150ms;
+  --fl-duration-normal: 200ms;
+  --fl-duration-gentle: 250ms;
+  --fl-duration-slow: 300ms;
+  --fl-duration-slower: 400ms;
+  --fl-duration-ultra-slow: 500ms;
+  --fl-curve-accelerate-max: cubic-bezier(1, 0, 1, 1);
+  --fl-curve-accelerate-mid: cubic-bezier(0.7, 0, 1, 0.5);
+  --fl-curve-decelerate-max: cubic-bezier(0, 0, 0, 1);
+  --fl-curve-decelerate-mid: cubic-bezier(0.1, 0.9, 0.2, 1);
+  --fl-curve-easy-ease: cubic-bezier(0.33, 0, 0.67, 1);
+  --fl-curve-linear: cubic-bezier(0, 0, 1, 1);
+
+  /* ---------- 尺寸 ---------- */
+  --fl-control-height-small: 24px;
+  --fl-control-height: 32px;
+  --fl-control-height-large: 40px;
+  --fl-tap-target: 32px;
+  --fl-tap-target-touch: 40px;
+  --fl-nav-height: 48px;
+  /* Fluent 招牌：控件底边描边更深 */
+  --fl-control-stroke-bottom: rgba(0, 0, 0, 0.16);
+}
+
+/* ---------- 暗色 ---------- */
+[data-style="fluent"][data-theme="dark"] {
+  --fl-neutral-bg1: #292929;
+  --fl-neutral-bg2: #1F1F1F;
+  --fl-neutral-bg3: #141414;
+  --fl-neutral-bg4: #0A0A0A;
+  --fl-neutral-bg5: #000000;
+  --fl-neutral-bg6: #333333;
+  --fl-neutral-bg-disabled: #141414;
+  --fl-neutral-bg-inverted: #FFFFFF;
+
+  --fl-neutral-fg1: #FFFFFF;
+  --fl-neutral-fg2: #D6D6D6;
+  --fl-neutral-fg3: #ADADAD;
+  --fl-neutral-fg4: #999999;
+  --fl-neutral-fg-disabled: #5C5C5C;
+  --fl-neutral-fg-on-brand: #FFFFFF;
+  --fl-neutral-fg-inverted: #242424;
+
+  --fl-neutral-stroke1: #666666;
+  --fl-neutral-stroke2: #525252;
+  --fl-neutral-stroke3: #3D3D3D;
+  --fl-neutral-stroke-accessible: #ADADAD;
+  --fl-neutral-stroke-disabled: #424242;
+
+  --fl-subtle-bg-hover: #383838;
+  --fl-subtle-bg-pressed: #404040;
+  --fl-subtle-bg-selected: #333333;
+
+  --fl-brand: #115EA3;
+  --fl-brand-hover: #0F6CBD;
+  --fl-brand-pressed: #0C3B5E;
+  --fl-brand-selected: #1A5B96;
+  --fl-brand-fg1: #479EF5;
+  --fl-brand-fg2: #62ABF5;
+  --fl-brand-fg-link: #479EF5;
+  --fl-brand-stroke1: #479EF5;
+  --fl-brand-subtle-bg: #082338;
+  --fl-brand-subtle-bg-hover: #0C3B5E;
+  --fl-compound-brand-bg: #479EF5;
+
+  --fl-status-danger-bg: #C50F1F;
+  --fl-status-danger-fg: #DC626D;
+  --fl-status-danger-subtle: #3B0509;
+  --fl-status-success-bg: #107C10;
+  --fl-status-success-fg: #54B054;
+  --fl-status-success-subtle: #052505;
+  --fl-status-warning-bg: #DA3B01;
+  --fl-status-warning-fg: #E9835E;
+  --fl-status-warning-subtle: #4D1A00;
+  --fl-status-info-bg: #0078D4;
+  --fl-status-info-fg: #479EF5;
+  --fl-status-info-subtle: #002848;
+
+  --fl-mica-bg: rgba(32, 32, 32, 0.85);
+  --fl-mica-alt-bg: rgba(32, 32, 32, 0.90);
+  --fl-acrylic-bg: rgba(44, 44, 44, 0.60);
+  --fl-acrylic-inapp-bg: rgba(44, 44, 44, 0.60);
+
+  --fl-shadow-2: 0 1px 2px rgba(0,0,0,0.28), 0 0 2px rgba(0,0,0,0.24);
+  --fl-shadow-4: 0 2px 4px rgba(0,0,0,0.28), 0 0 2px rgba(0,0,0,0.24);
+  --fl-shadow-8: 0 4px 8px rgba(0,0,0,0.28), 0 0 2px rgba(0,0,0,0.24);
+  --fl-shadow-16: 0 8px 16px rgba(0,0,0,0.28), 0 0 2px rgba(0,0,0,0.24);
+  --fl-shadow-28: 0 14px 28px rgba(0,0,0,0.44), 0 0 8px rgba(0,0,0,0.36);
+  --fl-shadow-64: 0 32px 64px rgba(0,0,0,0.44), 0 0 8px rgba(0,0,0,0.36);
+
+  --fl-control-stroke-bottom: rgba(255, 255, 255, 0.12);
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-style="fluent"]:not([data-theme="light"]) {
+    --fl-neutral-bg1: #292929;
+    --fl-neutral-bg2: #1F1F1F;
+    --fl-neutral-bg3: #141414;
+    --fl-neutral-bg4: #0A0A0A;
+    --fl-neutral-bg5: #000000;
+    --fl-neutral-bg6: #333333;
+    --fl-neutral-bg-disabled: #141414;
+    --fl-neutral-fg1: #FFFFFF;
+    --fl-neutral-fg2: #D6D6D6;
+    --fl-neutral-fg3: #ADADAD;
+    --fl-neutral-fg4: #999999;
+    --fl-neutral-fg-disabled: #5C5C5C;
+    --fl-neutral-stroke1: #666666;
+    --fl-neutral-stroke2: #525252;
+    --fl-neutral-stroke3: #3D3D3D;
+    --fl-neutral-stroke-accessible: #ADADAD;
+    --fl-neutral-stroke-disabled: #424242;
+    --fl-subtle-bg-hover: #383838;
+    --fl-subtle-bg-pressed: #404040;
+    --fl-subtle-bg-selected: #333333;
+    --fl-brand: #115EA3;
+    --fl-brand-hover: #0F6CBD;
+    --fl-brand-pressed: #0C3B5E;
+    --fl-brand-selected: #1A5B96;
+    --fl-brand-fg1: #479EF5;
+    --fl-brand-fg2: #62ABF5;
+    --fl-brand-fg-link: #479EF5;
+    --fl-brand-stroke1: #479EF5;
+    --fl-brand-subtle-bg: #082338;
+    --fl-compound-brand-bg: #479EF5;
+    --fl-mica-bg: rgba(32, 32, 32, 0.85);
+    --fl-acrylic-bg: rgba(44, 44, 44, 0.60);
+    --fl-control-stroke-bottom: rgba(255, 255, 255, 0.12);
+  }
+}

@@ -1,0 +1,239 @@
+/* ==========================================================================
+   MIUIX / Xiaomi HyperOS — 设计令牌
+   来源：MIUIX 开源组件库 (compose-miuix-ui/miuix, Apache-2.0) 默认 Colors/TextStyles
+        + 小米 HyperOS 官方设计规范（MiSans / 小部件规范）
+   用法：单独使用时把 [data-style="miuix"] 替换为 :root 或 html
+        与其他风格共存时，把容器设为 <div data-style="miuix">
+   暗色切换：<div data-style="miuix" data-theme="dark">
+   ========================================================================== */
+
+[data-style="miuix"] {
+  /* ---------- 颜色（亮色） ---------- */
+  --mi-primary: #3482FF;
+  --mi-on-primary: #FFFFFF;
+  --mi-primary-variant: #3482FF;
+  --mi-on-primary-variant: #AECDFF;
+  --mi-primary-container: #5D9BFF;
+  --mi-on-primary-container: #FFFFFF;
+
+  --mi-secondary: #E6E6E6;
+  --mi-on-secondary: #FFFFFF;
+  --mi-secondary-variant: #F0F0F0;
+  --mi-on-secondary-variant: #303030;
+  --mi-secondary-container: #F0F0F0;
+  --mi-on-secondary-container: #A9A9A9;
+
+  --mi-tertiary-container: #EAF2FF;
+  --mi-on-tertiary-container: #3482FF;
+
+  --mi-error: #E94634;
+  --mi-on-error: #FFFFFF;
+  --mi-error-container: #FDF6F4;
+  --mi-on-error-container: #410002;
+
+  --mi-background: #FFFFFF;
+  --mi-on-background: #000000;
+  --mi-on-background-variant: #8C93B0;
+
+  --mi-surface: #F7F7F7;
+  --mi-on-surface: #000000;
+  --mi-surface-variant: #FFFFFF;
+  --mi-on-surface-secondary: rgba(0, 0, 0, 0.80);
+  --mi-on-surface-variant-summary: rgba(0, 0, 0, 0.60);
+  --mi-on-surface-variant-actions: rgba(0, 0, 0, 0.40);
+
+  --mi-surface-container: #FFFFFF;
+  --mi-surface-container-high: #E8E8E8;
+  --mi-surface-container-highest: #E8E8E8;
+  --mi-on-surface-container-variant: #959595;
+  --mi-on-surface-container-high: #A2A2A2;
+
+  --mi-disabled-primary: #C2D9FF;
+  --mi-disabled-on-primary: #F3F8FF;
+  --mi-disabled-secondary: #F0F0F0;
+  --mi-disabled-on-secondary: #FCFCFC;
+  --mi-disabled-on-surface: #B2B2B2;
+
+  --mi-outline: #D9D9D9;
+  --mi-divider-line: #E0E0E0;
+  --mi-window-dimming: rgba(0, 0, 0, 0.30);
+  --mi-slider-background: rgba(0, 0, 0, 0.06);
+  --mi-slider-key-point: rgba(163, 179, 205, 0.30);
+  --mi-slider-key-point-foreground: #6EB5FF;
+
+  /* ---------- 字体 ---------- */
+  --mi-font: "MiSans", "MiSans VF", "HarmonyOS Sans SC", "PingFang SC",
+             "Source Han Sans SC", "Noto Sans SC", -apple-system,
+             "Segoe UI", Roboto, sans-serif;
+  --mi-font-mono: "MiSans Mono", ui-monospace, "SF Mono", Consolas, monospace;
+
+  /* 字阶（TextStyles 默认值） */
+  --mi-text-title1: 32px;
+  --mi-text-title2: 24px;
+  --mi-text-title3: 20px;
+  --mi-text-title4: 18px;
+  --mi-text-headline1: 17px;
+  --mi-text-headline2: 16px;
+  --mi-text-subtitle: 14px;
+  --mi-text-body1: 16px;
+  --mi-text-body2: 14px;
+  --mi-text-main: 17px;
+  --mi-text-paragraph: 17px;
+  --mi-text-button: 17px;
+  --mi-text-footnote1: 13px;
+  --mi-text-footnote2: 11px;
+
+  --mi-weight-regular: 400;
+  --mi-weight-medium: 500;
+  --mi-weight-demibold: 600;
+
+  --mi-leading-tight: 1.2;
+  --mi-leading-normal: 1.4;
+  --mi-leading-relaxed: 1.6;
+
+  --mi-tracking-cjk: 0;
+  --mi-tracking-latin: 0.02em;
+
+  /* ---------- 间距（8px 栅格） ---------- */
+  --mi-space-1: 4px;
+  --mi-space-2: 8px;
+  --mi-space-3: 12px;
+  --mi-space-4: 16px;
+  --mi-space-5: 20px;
+  --mi-space-6: 24px;
+  --mi-space-8: 32px;
+  --mi-space-12: 48px;
+  --mi-page-margin: 16px;
+
+  /* ---------- 圆角 ---------- */
+  --mi-radius-control: 12px;
+  --mi-radius-card: 18px;
+  --mi-radius-sheet: 24px;
+  --mi-radius-chip: 8px;
+  --mi-radius-pill: 999px;
+  --mi-radius-widget: 42px;
+
+  /* ---------- 海拔（HyperOS 主要靠色阶，阴影极轻） ---------- */
+  --mi-elevation-1: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --mi-elevation-2: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --mi-elevation-3: 0 8px 24px rgba(0, 0, 0, 0.10);
+
+  /* ---------- 动效 ---------- */
+  --mi-duration-instant: 100ms;
+  --mi-duration-fast: 150ms;
+  --mi-duration-normal: 250ms;
+  --mi-duration-slow: 300ms;
+  --mi-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --mi-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --mi-easing-overshoot: cubic-bezier(0.34, 1.2, 0.64, 1);
+  --mi-press-scale: 0.96;
+
+  /* ---------- 尺寸 ---------- */
+  --mi-tap-target: 48px;
+  --mi-control-height: 48px;
+  --mi-navbar-height: 56px;
+}
+
+/* ---------- 颜色（暗色） ---------- */
+[data-style="miuix"][data-theme="dark"] {
+  --mi-primary: #277AF7;
+  --mi-on-primary: #FFFFFF;
+  --mi-primary-variant: #0073DD;
+  --mi-on-primary-variant: #99C7F1;
+  --mi-primary-container: #338FE4;
+  --mi-on-primary-container: #FFFFFF;
+
+  --mi-secondary: #505050;
+  --mi-on-secondary: #FFFFFF;
+  --mi-secondary-variant: #434343;
+  --mi-on-secondary-variant: #D9D9D9;
+  --mi-secondary-container: #434343;
+  --mi-on-secondary-container: #7C7C7C;
+
+  --mi-tertiary-container: #2B3B54;
+  --mi-on-tertiary-container: #4788FF;
+
+  --mi-error: #F12522;
+  --mi-on-error: #FFFFFF;
+  --mi-error-container: #2E0603;
+  --mi-on-error-container: #FFDAD6;
+
+  --mi-background: #242424;
+  --mi-on-background: rgba(255, 255, 255, 0.90);
+  --mi-on-background-variant: #787E96;
+
+  --mi-surface: #000000;
+  --mi-on-surface: #F2F2F2;
+  --mi-surface-variant: #242424;
+  --mi-on-surface-secondary: rgba(255, 255, 255, 0.80);
+  --mi-on-surface-variant-summary: rgba(255, 255, 255, 0.50);
+  --mi-on-surface-variant-actions: rgba(255, 255, 255, 0.40);
+
+  --mi-surface-container: #242424;
+  --mi-surface-container-high: #242424;
+  --mi-surface-container-highest: #2D2D2D;
+  --mi-on-surface-container-variant: #737373;
+  --mi-on-surface-container-high: #666666;
+
+  --mi-disabled-primary: #253E64;
+  --mi-disabled-on-primary: #677993;
+  --mi-disabled-secondary: #3F3F3F;
+  --mi-disabled-on-secondary: #797979;
+  --mi-disabled-on-surface: #666666;
+
+  --mi-outline: #404040;
+  --mi-divider-line: #393939;
+  --mi-window-dimming: rgba(0, 0, 0, 0.60);
+  --mi-slider-background: rgba(255, 255, 255, 0.15);
+  --mi-slider-key-point: rgba(122, 138, 166, 0.30);
+  --mi-slider-key-point-foreground: #5DAAFF;
+
+  --mi-elevation-1: 0 1px 2px rgba(0, 0, 0, 0.24);
+  --mi-elevation-2: 0 2px 8px rgba(0, 0, 0, 0.32);
+  --mi-elevation-3: 0 8px 24px rgba(0, 0, 0, 0.40);
+}
+
+/* 跟随系统暗色（未显式指定 data-theme 时生效） */
+@media (prefers-color-scheme: dark) {
+  [data-style="miuix"]:not([data-theme="light"]) {
+    --mi-primary: #277AF7;
+    --mi-on-primary: #FFFFFF;
+    --mi-primary-variant: #0073DD;
+    --mi-on-primary-variant: #99C7F1;
+    --mi-primary-container: #338FE4;
+    --mi-secondary: #505050;
+    --mi-secondary-variant: #434343;
+    --mi-on-secondary-variant: #D9D9D9;
+    --mi-secondary-container: #434343;
+    --mi-on-secondary-container: #7C7C7C;
+    --mi-tertiary-container: #2B3B54;
+    --mi-on-tertiary-container: #4788FF;
+    --mi-error: #F12522;
+    --mi-error-container: #2E0603;
+    --mi-on-error-container: #FFDAD6;
+    --mi-background: #242424;
+    --mi-on-background: rgba(255, 255, 255, 0.90);
+    --mi-on-background-variant: #787E96;
+    --mi-surface: #000000;
+    --mi-on-surface: #F2F2F2;
+    --mi-surface-variant: #242424;
+    --mi-on-surface-secondary: rgba(255, 255, 255, 0.80);
+    --mi-on-surface-variant-summary: rgba(255, 255, 255, 0.50);
+    --mi-on-surface-variant-actions: rgba(255, 255, 255, 0.40);
+    --mi-surface-container: #242424;
+    --mi-surface-container-high: #242424;
+    --mi-surface-container-highest: #2D2D2D;
+    --mi-on-surface-container-variant: #737373;
+    --mi-on-surface-container-high: #666666;
+    --mi-disabled-primary: #253E64;
+    --mi-disabled-on-primary: #677993;
+    --mi-disabled-secondary: #3F3F3F;
+    --mi-disabled-on-secondary: #797979;
+    --mi-disabled-on-surface: #666666;
+    --mi-outline: #404040;
+    --mi-divider-line: #393939;
+    --mi-window-dimming: rgba(0, 0, 0, 0.60);
+    --mi-slider-background: rgba(255, 255, 255, 0.15);
+    --mi-slider-key-point-foreground: #5DAAFF;
+  }
+}

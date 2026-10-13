@@ -1,0 +1,224 @@
+/* ==========================================================================
+   Apple Human Interface Guidelines — 设计令牌
+   来源：Apple 官方 HIG（Typography / Color，iOS 15–18）
+   用法：单独使用时把 [data-style="apple"] 替换为 :root 或 html
+   暗色切换：<div data-style="apple" data-theme="dark">
+   ========================================================================== */
+
+[data-style="apple"] {
+  /* ---------- 系统强调色（亮色） ---------- */
+  --ap-red: #FF3B30;
+  --ap-orange: #FF9500;
+  --ap-yellow: #FFCC00;
+  --ap-green: #34C759;
+  --ap-mint: #00C7BE;
+  --ap-teal: #30B0C7;
+  --ap-cyan: #32ADE6;
+  --ap-blue: #007AFF;
+  --ap-indigo: #5856D6;
+  --ap-purple: #AF52DE;
+  --ap-pink: #FF2D55;
+  --ap-brown: #A2845E;
+  --ap-gray: #8E8E93;
+
+  --ap-tint: var(--ap-blue);
+
+  /* ---------- 灰阶（亮色） ---------- */
+  --ap-gray-2: #AEAEB2;
+  --ap-gray-3: #C7C7CC;
+  --ap-gray-4: #D1D1D6;
+  --ap-gray-5: #E5E5EA;
+  --ap-gray-6: #F2F2F7;
+
+  /* ---------- 文字层级（亮色） ---------- */
+  --ap-label: #000000;
+  --ap-label-secondary: rgba(60, 60, 67, 0.60);
+  --ap-label-tertiary: rgba(60, 60, 67, 0.30);
+  --ap-label-quaternary: rgba(60, 60, 67, 0.18);
+  --ap-placeholder: rgba(60, 60, 67, 0.30);
+
+  /* ---------- 背景（亮色） ---------- */
+  --ap-bg: #FFFFFF;
+  --ap-bg-secondary: #F2F2F7;
+  --ap-bg-tertiary: #FFFFFF;
+  --ap-bg-grouped: #F2F2F7;
+  --ap-bg-grouped-secondary: #FFFFFF;
+  --ap-bg-grouped-tertiary: #F2F2F7;
+
+  /* ---------- 填充与分隔（亮色） ---------- */
+  --ap-fill: rgba(120, 120, 128, 0.20);
+  --ap-fill-secondary: rgba(120, 120, 128, 0.16);
+  --ap-fill-tertiary: rgba(118, 118, 128, 0.12);
+  --ap-fill-quaternary: rgba(116, 116, 128, 0.08);
+  --ap-separator: rgba(60, 60, 67, 0.29);
+  --ap-separator-opaque: #C6C6C8;
+
+  /* ---------- 材质（亮色） ---------- */
+  --ap-material-ultrathin: rgba(255, 255, 255, 0.50);
+  --ap-material-thin: rgba(255, 255, 255, 0.65);
+  --ap-material-regular: rgba(249, 249, 249, 0.78);
+  --ap-material-thick: rgba(255, 255, 255, 0.85);
+  --ap-material-chrome: rgba(249, 249, 249, 0.85);
+  --ap-blur-ultrathin: blur(10px) saturate(180%);
+  --ap-blur-thin: blur(20px) saturate(180%);
+  --ap-blur-regular: blur(20px) saturate(180%);
+  --ap-blur-thick: blur(30px) saturate(180%);
+
+  /* ---------- 字体 ---------- */
+  --ap-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+             "Helvetica Neue", "PingFang SC", "Hiragino Sans GB",
+             "Microsoft YaHei", sans-serif;
+  --ap-font-rounded: ui-rounded, "SF Pro Rounded", var(--ap-font);
+  --ap-font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
+
+  /* ---------- Dynamic Type 字阶（Large 默认档） ---------- */
+  --ap-text-large-title: 34px;   --ap-leading-large-title: 41px;
+  --ap-text-title1: 28px;        --ap-leading-title1: 34px;
+  --ap-text-title2: 22px;        --ap-leading-title2: 28px;
+  --ap-text-title3: 20px;        --ap-leading-title3: 25px;
+  --ap-text-headline: 17px;      --ap-leading-headline: 22px;
+  --ap-text-body: 17px;          --ap-leading-body: 22px;
+  --ap-text-callout: 16px;       --ap-leading-callout: 21px;
+  --ap-text-subhead: 15px;       --ap-leading-subhead: 20px;
+  --ap-text-footnote: 13px;      --ap-leading-footnote: 18px;
+  --ap-text-caption1: 12px;      --ap-leading-caption1: 16px;
+  --ap-text-caption2: 11px;      --ap-leading-caption2: 13px;
+
+  --ap-weight-regular: 400;
+  --ap-weight-medium: 500;
+  --ap-weight-semibold: 600;
+  --ap-weight-bold: 700;
+  --ap-tracking-cjk: 0;
+  --ap-tracking-latin: -0.01em;
+
+  /* ---------- 间距 ---------- */
+  --ap-space-1: 8px;
+  --ap-space-2: 16px;
+  --ap-space-3: 24px;
+  --ap-space-4: 32px;
+  --ap-page-margin: 16px;
+
+  /* ---------- 圆角（连续曲率近似；嵌套 = 外层 − 内边距） ---------- */
+  --ap-radius-control: 10px;
+  --ap-radius-card: 12px;
+  --ap-radius-sheet: 16px;
+  --ap-radius-alert: 14px;
+  --ap-radius-input: 10px;
+  --ap-radius-pill: 999px;
+
+  /* ---------- 阴影（亮色用阴影，暗色用更亮表面） ---------- */
+  --ap-shadow-1: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --ap-shadow-2: 0 4px 16px rgba(0, 0, 0, 0.10);
+  --ap-shadow-3: 0 12px 32px rgba(0, 0, 0, 0.14);
+
+  /* ---------- 动效 ---------- */
+  --ap-duration-instant: 100ms;
+  --ap-duration-fast: 200ms;
+  --ap-duration-normal: 250ms;
+  --ap-duration-slow: 350ms;
+  --ap-easing-standard: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ap-easing-decelerate: cubic-bezier(0.32, 0.72, 0, 1);
+  --ap-press-scale: 0.96;
+  --ap-press-opacity: 0.7;
+
+  /* ---------- 尺寸 ---------- */
+  --ap-tap-target: 44px;
+  --ap-navbar-height: 44px;
+  --ap-navbar-large-height: 96px;
+  --ap-tabbar-height: 49px;
+}
+
+/* ---------- 暗色 ---------- */
+[data-style="apple"][data-theme="dark"] {
+  --ap-red: #FF453A;
+  --ap-orange: #FF9F0A;
+  --ap-yellow: #FFD60A;
+  --ap-green: #30D158;
+  --ap-mint: #63E6E2;
+  --ap-teal: #40CBE0;
+  --ap-cyan: #64D2FF;
+  --ap-blue: #0A84FF;
+  --ap-indigo: #5E5CE6;
+  --ap-purple: #BF5AF2;
+  --ap-pink: #FF375F;
+  --ap-brown: #AC8E68;
+  --ap-gray: #8E8E93;
+
+  --ap-gray-2: #636366;
+  --ap-gray-3: #48484A;
+  --ap-gray-4: #3A3A3C;
+  --ap-gray-5: #2C2C2E;
+  --ap-gray-6: #1C1C1E;
+
+  --ap-label: #FFFFFF;
+  --ap-label-secondary: rgba(235, 235, 245, 0.60);
+  --ap-label-tertiary: rgba(235, 235, 245, 0.30);
+  --ap-label-quaternary: rgba(235, 235, 245, 0.18);
+  --ap-placeholder: rgba(235, 235, 245, 0.30);
+
+  --ap-bg: #000000;
+  --ap-bg-secondary: #1C1C1E;
+  --ap-bg-tertiary: #2C2C2E;
+  --ap-bg-grouped: #000000;
+  --ap-bg-grouped-secondary: #1C1C1E;
+  --ap-bg-grouped-tertiary: #2C2C2E;
+
+  --ap-fill: rgba(120, 120, 128, 0.36);
+  --ap-fill-secondary: rgba(120, 120, 128, 0.32);
+  --ap-fill-tertiary: rgba(118, 118, 128, 0.24);
+  --ap-fill-quaternary: rgba(118, 118, 128, 0.18);
+  --ap-separator: rgba(84, 84, 88, 0.60);
+  --ap-separator-opaque: #38383A;
+
+  --ap-material-ultrathin: rgba(30, 30, 30, 0.50);
+  --ap-material-thin: rgba(30, 30, 30, 0.65);
+  --ap-material-regular: rgba(30, 30, 30, 0.72);
+  --ap-material-thick: rgba(30, 30, 30, 0.85);
+  --ap-material-chrome: rgba(30, 30, 30, 0.85);
+
+  /* 暗色下阴影基本不可见，层级靠更亮的表面 */
+  --ap-shadow-1: 0 1px 3px rgba(0, 0, 0, 0.40);
+  --ap-shadow-2: 0 4px 16px rgba(0, 0, 0, 0.50);
+  --ap-shadow-3: 0 12px 32px rgba(0, 0, 0, 0.60);
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-style="apple"]:not([data-theme="light"]) {
+    --ap-red: #FF453A;
+    --ap-orange: #FF9F0A;
+    --ap-yellow: #FFD60A;
+    --ap-green: #30D158;
+    --ap-mint: #63E6E2;
+    --ap-teal: #40CBE0;
+    --ap-cyan: #64D2FF;
+    --ap-blue: #0A84FF;
+    --ap-indigo: #5E5CE6;
+    --ap-purple: #BF5AF2;
+    --ap-pink: #FF375F;
+    --ap-brown: #AC8E68;
+    --ap-gray-2: #636366;
+    --ap-gray-3: #48484A;
+    --ap-gray-4: #3A3A3C;
+    --ap-gray-5: #2C2C2E;
+    --ap-gray-6: #1C1C1E;
+    --ap-label: #FFFFFF;
+    --ap-label-secondary: rgba(235, 235, 245, 0.60);
+    --ap-label-tertiary: rgba(235, 235, 245, 0.30);
+    --ap-label-quaternary: rgba(235, 235, 245, 0.18);
+    --ap-placeholder: rgba(235, 235, 245, 0.30);
+    --ap-bg: #000000;
+    --ap-bg-secondary: #1C1C1E;
+    --ap-bg-tertiary: #2C2C2E;
+    --ap-bg-grouped: #000000;
+    --ap-bg-grouped-secondary: #1C1C1E;
+    --ap-bg-grouped-tertiary: #2C2C2E;
+    --ap-fill: rgba(120, 120, 128, 0.36);
+    --ap-fill-secondary: rgba(120, 120, 128, 0.32);
+    --ap-fill-tertiary: rgba(118, 118, 128, 0.24);
+    --ap-fill-quaternary: rgba(118, 118, 128, 0.18);
+    --ap-separator: rgba(84, 84, 88, 0.60);
+    --ap-separator-opaque: #38383A;
+    --ap-material-regular: rgba(30, 30, 30, 0.72);
+    --ap-material-thick: rgba(30, 30, 30, 0.85);
+  }
+}

@@ -1,0 +1,239 @@
+/* ==========================================================================
+   Material Design 3 (Material You) — 设计令牌
+   来源：M3 官方 Baseline scheme（种子色 #6750A4）+ Type Scale / Shape / Elevation / Motion tokens
+   注意：Android 12+ 动态取色会替换色值，但角色名不变 —— 组件只消费角色变量。
+   用法：单独使用时把 [data-style="material"] 替换为 :root 或 html
+   暗色切换：<div data-style="material" data-theme="dark">
+   ========================================================================== */
+
+[data-style="material"] {
+  /* ---------- 强调色（亮色） ---------- */
+  --md-primary: #6750A4;
+  --md-on-primary: #FFFFFF;
+  --md-primary-container: #EADDFF;
+  --md-on-primary-container: #21005D;
+
+  --md-secondary: #625B71;
+  --md-on-secondary: #FFFFFF;
+  --md-secondary-container: #E8DEF8;
+  --md-on-secondary-container: #1D192B;
+
+  --md-tertiary: #7D5260;
+  --md-on-tertiary: #FFFFFF;
+  --md-tertiary-container: #FFD8E4;
+  --md-on-tertiary-container: #31111D;
+
+  /* ---------- 错误色（静态，不随动态取色变化） ---------- */
+  --md-error: #B3261E;
+  --md-on-error: #FFFFFF;
+  --md-error-container: #F9DEDC;
+  --md-on-error-container: #410E0B;
+
+  /* ---------- 表面（亮色） ---------- */
+  --md-background: #FFFBFE;
+  --md-on-background: #1C1B1F;
+  --md-surface: #FFFBFE;
+  --md-on-surface: #1C1B1F;
+  --md-surface-variant: #E7E0EC;
+  --md-on-surface-variant: #49454F;
+
+  --md-surface-container-lowest: #FFFFFF;
+  --md-surface-container-low: #F7F2FA;
+  --md-surface-container: #F3EDF7;
+  --md-surface-container-high: #ECE6F0;
+  --md-surface-container-highest: #E6E0E9;
+  --md-surface-dim: #DED8E1;
+  --md-surface-bright: #FFFBFE;
+
+  /* ---------- 反色与描边 ---------- */
+  --md-inverse-surface: #313033;
+  --md-inverse-on-surface: #F4EFF4;
+  --md-inverse-primary: #D0BCFF;
+  --md-outline: #79747E;
+  --md-outline-variant: #CAC4D0;
+  --md-scrim: rgba(0, 0, 0, 0.32);
+  --md-shadow: #000000;
+
+  /* ---------- 状态层不透明度 ---------- */
+  --md-state-hover: 0.08;
+  --md-state-focus: 0.10;
+  --md-state-pressed: 0.10;
+  --md-state-dragged: 0.16;
+
+  /* ---------- 字体 ---------- */
+  --md-font: "Roboto Flex", Roboto, "Noto Sans SC", "Source Han Sans SC",
+            "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --md-font-mono: "Roboto Mono", ui-monospace, "SF Mono", Consolas, monospace;
+
+  /* ---------- 15 级 Type Scale ---------- */
+  --md-display-large: 57px;    --md-display-large-lh: 64px;    --md-display-large-ls: -0.25px;
+  --md-display-medium: 45px;   --md-display-medium-lh: 52px;   --md-display-medium-ls: 0px;
+  --md-display-small: 36px;    --md-display-small-lh: 44px;    --md-display-small-ls: 0px;
+
+  --md-headline-large: 32px;   --md-headline-large-lh: 40px;   --md-headline-large-ls: 0px;
+  --md-headline-medium: 28px;  --md-headline-medium-lh: 36px;  --md-headline-medium-ls: 0px;
+  --md-headline-small: 24px;   --md-headline-small-lh: 32px;   --md-headline-small-ls: 0px;
+
+  --md-title-large: 22px;      --md-title-large-lh: 28px;      --md-title-large-ls: 0px;
+  --md-title-medium: 16px;     --md-title-medium-lh: 24px;     --md-title-medium-ls: 0.15px;
+  --md-title-small: 14px;      --md-title-small-lh: 20px;      --md-title-small-ls: 0.1px;
+
+  --md-body-large: 16px;       --md-body-large-lh: 24px;       --md-body-large-ls: 0.5px;
+  --md-body-medium: 14px;      --md-body-medium-lh: 20px;      --md-body-medium-ls: 0.25px;
+  --md-body-small: 12px;       --md-body-small-lh: 16px;       --md-body-small-ls: 0.4px;
+
+  --md-label-large: 14px;      --md-label-large-lh: 20px;      --md-label-large-ls: 0.1px;
+  --md-label-medium: 12px;     --md-label-medium-lh: 16px;     --md-label-medium-ls: 0.5px;
+  --md-label-small: 11px;      --md-label-small-lh: 16px;      --md-label-small-ls: 0.5px;
+
+  --md-weight-regular: 400;
+  --md-weight-medium: 500;
+  --md-weight-bold: 700;
+
+  /* ---------- 间距（4dp 基准） ---------- */
+  --md-space-1: 4px;
+  --md-space-2: 8px;
+  --md-space-3: 12px;
+  --md-space-4: 16px;
+  --md-space-6: 24px;
+  --md-space-8: 32px;
+  --md-space-12: 48px;
+  --md-space-16: 64px;
+  --md-page-margin: 16px;
+
+  /* ---------- 形状 ---------- */
+  --md-shape-none: 0;
+  --md-shape-xs: 4px;
+  --md-shape-sm: 8px;
+  --md-shape-md: 12px;      /* 卡片默认 */
+  --md-shape-lg: 16px;      /* FAB 标准 */
+  --md-shape-xl: 28px;      /* 大 FAB / 对话框 / 底部面板 */
+  --md-shape-full: 9999px;  /* 按钮 / 选中 Chip / 开关 */
+
+  /* ---------- 海拔（色调叠加优先，阴影为辅） ---------- */
+  --md-elevation-0: 0;
+  --md-elevation-1: 1px;
+  --md-elevation-2: 3px;
+  --md-elevation-3: 6px;
+  --md-elevation-4: 8px;
+  --md-elevation-5: 12px;
+
+  --md-tonal-1: 0.05;
+  --md-tonal-2: 0.08;
+  --md-tonal-3: 0.11;
+  --md-tonal-4: 0.12;
+  --md-tonal-5: 0.14;
+
+  --md-shadow-1: 0 1px 2px rgba(0,0,0,0.30), 0 1px 3px 1px rgba(0,0,0,0.15);
+  --md-shadow-2: 0 1px 2px rgba(0,0,0,0.30), 0 2px 6px 2px rgba(0,0,0,0.15);
+  --md-shadow-3: 0 1px 3px rgba(0,0,0,0.30), 0 4px 8px 3px rgba(0,0,0,0.15);
+  --md-shadow-4: 0 2px 3px rgba(0,0,0,0.30), 0 6px 10px 4px rgba(0,0,0,0.15);
+  --md-shadow-5: 0 4px 4px rgba(0,0,0,0.30), 0 8px 12px 6px rgba(0,0,0,0.15);
+
+  /* ---------- 动效 ---------- */
+  --md-duration-short1: 50ms;
+  --md-duration-short2: 100ms;
+  --md-duration-short3: 150ms;
+  --md-duration-short4: 200ms;
+  --md-duration-medium1: 250ms;
+  --md-duration-medium2: 300ms;
+  --md-duration-medium3: 350ms;
+  --md-duration-medium4: 400ms;
+  --md-duration-long1: 450ms;
+  --md-duration-long2: 500ms;
+
+  --md-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --md-easing-emphasized-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --md-easing-emphasized-accelerate: cubic-bezier(0.3, 0, 0.8, 0.15);
+  --md-easing-linear: cubic-bezier(0, 0, 1, 1);
+
+  /* ---------- 尺寸 ---------- */
+  --md-tap-target: 48px;
+  --md-button-height: 40px;
+  --md-field-height: 56px;
+  --md-appbar-height: 64px;
+  --md-navbar-height: 80px;
+}
+
+/* ---------- 暗色 ---------- */
+[data-style="material"][data-theme="dark"] {
+  --md-primary: #D0BCFF;
+  --md-on-primary: #381E72;
+  --md-primary-container: #4F378B;
+  --md-on-primary-container: #EADDFF;
+
+  --md-secondary: #CCC2DC;
+  --md-on-secondary: #332D41;
+  --md-secondary-container: #4A4458;
+  --md-on-secondary-container: #E8DEF8;
+
+  --md-tertiary: #EFB8C8;
+  --md-on-tertiary: #492532;
+  --md-tertiary-container: #633B48;
+  --md-on-tertiary-container: #FFD8E4;
+
+  --md-error: #F2B8B5;
+  --md-on-error: #601410;
+  --md-error-container: #8C1D18;
+  --md-on-error-container: #F9DEDC;
+
+  --md-background: #1C1B1F;
+  --md-on-background: #E6E1E5;
+  --md-surface: #1C1B1F;
+  --md-on-surface: #E6E1E5;
+  --md-surface-variant: #49454F;
+  --md-on-surface-variant: #CAC4D0;
+
+  --md-surface-container-lowest: #0F0D13;
+  --md-surface-container-low: #1D1B20;
+  --md-surface-container: #211F26;
+  --md-surface-container-high: #2B2930;
+  --md-surface-container-highest: #36343B;
+  --md-surface-dim: #141218;
+  --md-surface-bright: #3B383E;
+
+  --md-inverse-surface: #E6E1E5;
+  --md-inverse-on-surface: #313033;
+  --md-inverse-primary: #6750A4;
+  --md-outline: #938F99;
+  --md-outline-variant: #49454F;
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-style="material"]:not([data-theme="light"]) {
+    --md-primary: #D0BCFF;
+    --md-on-primary: #381E72;
+    --md-primary-container: #4F378B;
+    --md-on-primary-container: #EADDFF;
+    --md-secondary: #CCC2DC;
+    --md-on-secondary: #332D41;
+    --md-secondary-container: #4A4458;
+    --md-on-secondary-container: #E8DEF8;
+    --md-tertiary: #EFB8C8;
+    --md-on-tertiary: #492532;
+    --md-tertiary-container: #633B48;
+    --md-on-tertiary-container: #FFD8E4;
+    --md-error: #F2B8B5;
+    --md-on-error: #601410;
+    --md-error-container: #8C1D18;
+    --md-on-error-container: #F9DEDC;
+    --md-background: #1C1B1F;
+    --md-on-background: #E6E1E5;
+    --md-surface: #1C1B1F;
+    --md-on-surface: #E6E1E5;
+    --md-surface-variant: #49454F;
+    --md-on-surface-variant: #CAC4D0;
+    --md-surface-container-lowest: #0F0D13;
+    --md-surface-container-low: #1D1B20;
+    --md-surface-container: #211F26;
+    --md-surface-container-high: #2B2930;
+    --md-surface-container-highest: #36343B;
+    --md-surface-dim: #141218;
+    --md-surface-bright: #3B383E;
+    --md-inverse-surface: #E6E1E5;
+    --md-inverse-on-surface: #313033;
+    --md-inverse-primary: #6750A4;
+    --md-outline: #938F99;
+    --md-outline-variant: #49454F;
+  }
+}
