@@ -14,8 +14,8 @@
 
 | | MIUIX | Apple HIG | Material 3 | Fluent 2 |
 |---|---|---|---|---|
-| 高度 | 44–48px | 44–50pt | 40dp | 32px（默认） |
-| 圆角 | 胶囊（高/2） | 10–14pt（主体渐胶囊） | pill（full） | 4px |
+| 高度 | **40px（minWidth 58px）** | 44–50pt | 40dp | 32px（默认） |
+| 圆角 | **16px（squircle，非胶囊）** | 10–14pt（主体渐胶囊） | pill（full） | 4px |
 | 内边距 | 20px 水平 | 16–20pt 水平 | 24dp 水平 | 12px 水平 |
 | 文字 | 17px / 500 | 17pt / Semibold | label-large 14/500/0.1 | 14px / 600 |
 | 主按钮底 | `#3482FF` | `#007AFF` | `primary` | `#0F6CBD` |
@@ -30,11 +30,11 @@
 
 | | MIUIX | Apple HIG | Material 3 | Fluent 2 |
 |---|---|---|---|---|
-| 高度 | 44–48px | 36–44pt | 56dp | 32px |
-| 圆角 | 12px | 10pt | Filled 顶 4dp / Outlined 四角 4dp | 4px |
+| 高度 | 44–48px（多行 56px） | 36–44pt | 56dp | 32px |
+| 圆角 | **16px** | 10pt | Filled 顶 4dp / Outlined 四角 4dp | 4px |
 | 静止底 | `#F7F7F7` | `tertiarySystemFill` | Filled：`surface-container-highest`；Outlined：透明 | 白底 + 1px 边框 |
-| 边框 | 无或 1px `outline` | 无 | Outlined 1px `outline` | 1px `colorNeutralStroke1`，**底边加深** |
-| 聚焦 | 边框转 `#3482FF` | tint 色光标 + 微外发光 | 2px `primary` 边框/指示条，标签变 `primary` | 四边转品牌色 2px |
+| 边框 | 无 | 无 | Outlined 1px `outline` | 1px `colorNeutralStroke1`，**底边加深** |
+| 聚焦 | **2px 边框转 `#3482FF`**（常态 0） | tint 色光标 + 微外发光 | 2px `primary` 边框/指示条，标签变 `primary` | 四边转品牌色 2px |
 | 占位文字 | `onSurfaceVariantActions`（40% 黑） | `placeholderText` | `on-surface-variant` | `colorNeutralForeground4` |
 | 标签 | 前置标签（非浮动） | 无浮动标签 | 浮动标签（Filled 内 / Outlined 骑在边框上） | 常驻顶部标签 + 输入框 |
 | 错误态 | 边框 `#E94634` | 下方 `systemRed` 提示 | 边框 + 辅助文字转 `error` | 边框 `#C50F1F` + 下方错误文字 |
@@ -46,7 +46,7 @@
 
 | | MIUIX | Apple HIG | Material 3 | Fluent 2 |
 |---|---|---|---|---|
-| 圆角 | 16–20px | 10–20pt | 12dp | 6px |
+| 圆角 | **16px** | 10–20pt | 12dp | 6px |
 | 底色 | 亮色 `#FFFFFF`（背景 `#F7F7F7`）；暗色 `#242424` | `secondarySystemGroupedBackground` | Filled：`surface-container-highest`；Outlined：`surface` | `colorNeutralBackground1` |
 | 边框 | 暗色用 1px `#404040` | 无 | Outlined 用 1px `outline-variant` | 1px `colorNeutralStroke2` |
 | 阴影 | 极轻或不用 | 不用（靠分组） | Elevated 用 level 1 | `shadow2`（双层） |

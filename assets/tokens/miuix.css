@@ -105,13 +105,22 @@
   --mi-space-12: 48px;
   --mi-page-margin: 16px;
 
-  /* ---------- 圆角 ---------- */
-  --mi-radius-control: 12px;
-  --mi-radius-card: 18px;
-  --mi-radius-sheet: 24px;
+  /* ---------- 圆角 ----------
+     16px 为 ButtonDefaults / CardDefaults / TextFieldDefaults 的真实 CornerRadius。
+     MIUIX 使用 squircle（连续曲率），border-radius 只是回退；
+     半径 >= 12px 时建议用 clip-path / mask 增强，见 references/miuix-hyperos.md §4   */
+  --mi-radius-control: 16px;   /* 按钮 / 输入框 / 卡片统一值 */
+  --mi-radius-card: 16px;
+  --mi-radius-sheet: 24px;     /* 对话框 / 底部面板（Web 端建议值） */
   --mi-radius-chip: 8px;
-  --mi-radius-pill: 999px;
-  --mi-radius-widget: 42px;
+  --mi-radius-pill: 999px;     /* 头像、开关等全圆形 */
+  --mi-radius-widget: 42px;    /* 桌面小部件，官方规范 */
+
+  /* ---------- 尺寸 ---------- */
+  --mi-button-min-width: 58px;
+  --mi-button-min-height: 40px;
+  --mi-field-inside-margin: 16px;
+  --mi-field-border-width: 2px;
 
   /* ---------- 海拔（HyperOS 主要靠色阶，阴影极轻） ---------- */
   --mi-elevation-1: 0 1px 2px rgba(0, 0, 0, 0.04);
@@ -129,8 +138,8 @@
   --mi-press-scale: 0.96;
 
   /* ---------- 尺寸 ---------- */
-  --mi-tap-target: 48px;
-  --mi-control-height: 48px;
+  --mi-tap-target: 48px;          /* 无障碍建议的最小点击区 */
+  --mi-control-height: 40px;      /* ButtonDefaults.MinHeight */
   --mi-navbar-height: 56px;
 }
 

@@ -22,7 +22,7 @@ description: 前端界面设计风格的实现与还原助手，覆盖 Xiaomi MI
 | 主色 | `#3482FF`（亮）/ `#277AF7`（暗） | `#007AFF` / `#0A84FF` | 角色化，基线 `#6750A4` | `#0F6CBD` |
 | 字体 | MiSans | SF Pro（<20pt Text，≥20pt Display） | Roboto / Roboto Flex | Segoe UI Variable |
 | 正文基准 | 16–17px | 17pt | 16sp（body-large） | 14px（body-1） |
-| 圆角语言 | 大圆角，按钮近胶囊，卡片 16–20px | 连续曲率圆角（squircle），容器 10–20pt | 12dp 卡片 / 28dp FAB & 弹窗 / 全圆按钮 | 小圆角，控件 4px、弹窗 8px，嵌套 −2px |
+| 圆角语言 | **16dp 统一圆角 + squircle**（与 iOS 同源，按钮非胶囊） | 连续曲率圆角（squircle），容器 10–20pt | 12dp 卡片 / 28dp FAB & 弹窗 / 全圆按钮 | 小圆角，控件 4px、弹窗 8px，嵌套 −2px |
 | 层次手法 | 色阶分层（`#FFFFFF` / `#F7F7F7` / `#E8E8E8`），几乎不用重阴影 | 材质模糊（translucency）+ 分组列表 + 内容压过 UI | 色调叠加（tonal overlay）优先，阴影次之 | 材质（Mica / Acrylic）+ 低调多层阴影 |
 | 动效 | 轻快、带弹性回弹，200–300ms | 弹簧物理，200–300ms，无 linear | 强调曲线 `cubic-bezier(0.2,0,0,1)`，按时长令牌分级 | 快而克制，150–250ms，`easyEase` |
 | 触控/点击目标 | ≥ 48dp | ≥ 44×44pt | ≥ 48dp | 控件高 32px（紧凑/舒适模式） |

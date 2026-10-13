@@ -1,10 +1,12 @@
 # MIUIX / Xiaomi HyperOS 设计语言
 
-> 数据来源：MIUIX 开源组件库（`compose-miuix-ui/miuix`，Apache-2.0）的 `Colors.kt` / `TextStyles.kt` 默认令牌，以及小米官方 HyperOS 设计规范（MiSans 字体、小部件规范）。MIUIX 是 HyperOS 设计语言在 Compose Multiplatform 上的官方开源实现，其默认色板与字阶可直接作为 Web 端的还原基准。
+> 数据来源：MIUIX 开源组件库（`compose-miuix-ui/miuix`，Apache-2.0）。颜色取自 `Colors.kt`，字阶取自 `TextStyles.kt`，**形状取自 `basic/Button.kt`、`Card.kt`、`TextField.kt` 中的 `Defaults` 常量**（均为源码真实值，非推导），另参考小米官方 HyperOS 设计规范（MiSans 字体、小部件规范）与官方 `docs/guide/squircle.md`。MIUIX 是 HyperOS 设计语言在 Compose Multiplatform 上的官方开源实现。
+>
+> 文中凡标「Web 端建议值」的均为基于上述常量的映射；标「真实值」的均直接来自库源码。
 
 ## 1. 设计气质
 
-- **圆润通透**：大圆角、卡片式分组、大量浅灰分层，很少用阴影堆叠。
+- **圆润通透**：16dp 统一大圆角 + 连续曲率（squircle）、卡片式分组、大量浅灰分层，很少用阴影堆叠。
 - **蓝色科技感**：主色是明快的小米蓝 `#3482FF`，占屏比高（按钮、开关、选中态、链接都用它）。
 - **色阶分层而非阴影分层**：亮色下靠 `#FFFFFF → #F7F7F7 → #E8E8E8` 三档灰白拉开层次；暗色下靠 `#000000 → #242424 → #2D2D2D`。
 - **信息密度中等偏低**，喜欢大间距和分组卡片。
@@ -151,19 +153,64 @@ MIUIX `TextStyles` 默认字阶（单位 sp，Web 端 1sp ≈ 1px）：
 
 ## 4. 形状、间距、动效
 
-**圆角（HyperOS 视觉语言，Web 端推荐实现值）**：
+### 圆角：统一 16dp，且是连续曲率
+
+**这是本文档里唯一需要特别强调的形状事实：MIUIX 的按钮、输入框、卡片圆角统一是 `16.dp`，不是分档设计。**
+
+来自库源码的真实常量：
+
+| 元素 | 真实值 | 出处 |
+|---|---|---|
+| `ButtonDefaults.CornerRadius` | **16.dp** | `basic/Button.kt` |
+| `ButtonDefaults.MinHeight` | **40.dp** | `basic/Button.kt` |
+| `ButtonDefaults.MinWidth` | **58.dp** | `basic/Button.kt` |
+| `CardDefaults.CornerRadius` | **16.dp** | `basic/Card.kt` |
+| `TextFieldDefaults.CornerRadius` | **16.dp** | `basic/TextField.kt` |
+| `TextFieldDefaults.InsideMargin` | `DpSize(16.dp, 16.dp)` | `basic/TextField.kt` |
+| 输入框聚焦边框宽度 | `2.dp`（常态 0） | `basic/TextField.kt` |
+| 浮动标签字号 | `10.dp`（常驻 17.dp） | `basic/TextField.kt` |
+
+Web 端建议值（无官方 Web 数值表，以下为基于上述常量的映射）：
 
 | 元素 | 半径 |
 |---|---|
-| 按钮 | 高度/2（胶囊），常见 12–22px |
-| 输入框 / 选择器 | 12px |
-| 卡片 / 列表分组 | 16–20px |
-| 对话框 / 底部面板 | 20–28px |
-| 小型标签 Chip | 高度/2 或 8px |
+| 按钮 | **16px**（不是胶囊） |
+| 输入框 / 选择器 | **16px** |
+| 卡片 / 列表分组 | **16px** |
 | 图标容器 | 12px |
+| 全圆形（头像、Chip、开关） | 高度/2 或 999px |
 | 桌面小部件（官方规范） | 手机 42px / 折叠屏 38px / 平板 27px |
 
 嵌套圆角遵循 `内层 = 外层 − 内边距`。
+
+### squircle：MIUIX 用的是连续曲率圆角，不是 `border-radius`
+
+MIUIX 的所有表面走的是 `Modifier.squircleSurface(...)`（来自独立的 `miuix-squircle` 模块），**不是** Compose 自带的 `RoundedCornerShape`。
+
+两者的区别（引自官方 `docs/guide/squircle.md`）：
+
+> `RoundedCornerShape` 的圆角是一段纯粹的四分之一圆弧，直线段与弧之间的曲率存在突变。squircle 把曲率分布到更宽的角部区域，呈现现代移动端图标常见的"连续曲率圆角"观感。视觉差异在中到大半径时最明显。
+
+**这一点让 MIUIX 与 Apple HIG 在形状语言上同源**（Apple 用的是同一概念的 squircle），二者的圆角不是两套东西，区别只在半径量级与整体密度。
+
+**Web 端实现要点**：`border-radius` 只能做几何圆弧，做不出 squircle。中到大半径（≥ 12px）时视觉差异明显，需要以下方式近似：
+
+```css
+/* 方案 A：SVG 路径裁剪 —— 精度最高，可复用 */
+.squircle {
+  clip-path: url(#squircle-16);
+}
+/* 页面里放一次，用 superellipse 参数生成 path */
+<svg width="0" height="0"><clipPath id="squircle-16" clipPathUnits="objectBoundingBox">…</clipPath></svg>
+
+/* 方案 B：CSS 近似 —— 用 mask 叠加，成本低 */
+.squircle-approx {
+  border-radius: 16px;              /* 作为不支持时的回退 */
+  mask-image: paint(squircle);      /* 需 Houdini，渐进增强 */
+}
+```
+
+实现时至少要保证：**`border-radius: 16px` 是回退底线**，squircle 作为渐进增强。不要因为做不出 squircle 就把半径改小。
 
 **间距**：8px 基准栅格，常用档位 `4 / 8 / 12 / 16 / 20 / 24 / 32 / 48`。页面左右边距手机 16px、平板 24px。列表项垂直内边距 12–14px。卡片内边距 16px。
 
@@ -182,11 +229,11 @@ MIUIX `TextStyles` 默认字阶（单位 sp，Web 端 1sp ≈ 1px）：
 
 | 组件 | 规格 |
 |---|---|
-| **主按钮** | 高 44–48px，胶囊，底色 `--md-primary`，文字 `--md-on-primary` 17px；按下底色转 `--md-primary-variant` + scale 0.96；禁用底色 `--md-disabled-primary`，文字 `--md-disabled-on-primary` |
+| **主按钮** | **minHeight 40px / minWidth 58px，圆角 16px（squircle）**，底色 `--md-primary`，文字 `--md-on-primary` 17px；按下底色转 `--md-primary-variant` + scale 0.96；禁用底色 `--md-disabled-primary`，文字 `--md-disabled-on-primary` |
 | **次级按钮** | 底色 `--md-secondary`（浅灰），文字 `--md-on-secondary-variant`；同尺寸同圆角 |
 | **文字按钮** | 无底色，文字 `--md-primary` 17px |
-| **输入框** | 高 44–48px，圆角 12px，底色 `--md-surface`（亮色 `#F7F7F7`），无边框或 1px `--md-outline`；聚焦时边框变 `--md-primary`；占位文字 `--md-on-surface-variant-actions` |
-| **卡片** | 底色 `--md-surface-variant`（亮色白），圆角 16–20px，内边距 16px，**亮色下用 1px `--md-divider-line` 或不需要阴影**；暗色下靠 `--md-surface-variant` vs `--md-surface` 的色差或 1px `--md-outline` 区分 |
+| **输入框** | 高 44–48px（内容多时用 56px），**圆角 16px**，内边距 16px，底色 `--md-surface`（亮色 `#F7F7F7`）；**聚焦时边框 2px 转 `--md-primary`**（常态无边框）；浮动标签 10px / 常驻标签 17px；占位文字 `--md-on-surface-variant-actions` |
+| **卡片** | 底色 `--md-surface-variant`（亮色白），**圆角 16px**，内边距 16px，**亮色下用 1px `--md-divider-line` 或不需要阴影**；暗色下靠 `--md-surface-variant` vs `--md-surface` 的色差或 1px `--md-outline` 区分 |
 | **开关** | 轨道 52×32px 胶囊，滑块 24px 圆形白色带阴影；开启轨道 `--md-primary`，关闭 `--md-secondary`（亮色）或 `--md-surface-container-high`（暗色） |
 | **分段控件** | 容器底色 `--md-surface-container-high`，圆角 = 容器高/2 − 内边距；选中项白底 + 轻微阴影 + 文字 `--md-on-surface` |
 | **列表** | 分组卡片式：组内项白底，项间 1px `--md-divider-line`（左侧留 16px 缩进），组与组之间 16px 间距；每项高 ≥ 56px |
@@ -200,6 +247,8 @@ MIUIX `TextStyles` 默认字阶（单位 sp，Web 端 1sp ≈ 1px）：
 - ❌ 暗色背景写成 `#000000`。HyperOS 是 `#242424`。
 - ❌ 用 Material 的 `#6750A4` 紫或 iOS 的 `#007AFF`。小米蓝是 `#3482FF`。
 - ❌ 给卡片加厚重阴影。HyperOS 靠色阶分层，阴影极轻或不用。
-- ❌ 圆角用小值（2–4px）。HyperOS 是大圆角语言。
+- ❌ 圆角用小值（2–4px）。HyperOS 是 16dp 统一大圆角。
+- ❌ 把按钮做成胶囊（高度/2）。MIUIX 的 `ButtonDefaults.CornerRadius` 是 **16dp**，配合 40dp 高度，并非胶囊。
+- ❌ 只用 `border-radius` 就认为还原了。MIUIX 用的是 squircle；至少要在半径 ≥ 12px 时注意曲率差异。
 - ❌ 文字用纯 `#000000` 铺满所有层级。至少三档：`#000000` / 80% / 60% / 40%。
 - ❌ 中文字体没配 MiSans 回退，落到默认衬线体。
