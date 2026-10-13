@@ -11,7 +11,7 @@
 
 它的目标不是"看起来差不多"，而是用**语义令牌 + 组件形态 + 动效曲线**三层一致地还原，让成品能被该平台用户认出"这就是 iOS / 这就是 Material / 这就是 Windows"。
 
-在线预览：`assets/templates/showcase.html` —— 同一套组件在四种风格下的并列对照，可切换明暗主题。
+在线预览：**<https://frogg435.github.io/frontend-design-styles/>** —— 同一套组件在四种风格下的并列对照，可筛选风格、切换明暗主题。也可直接查看源码 [`assets/templates/showcase.html`](assets/templates/showcase.html)。
 
 ## 目录结构
 
