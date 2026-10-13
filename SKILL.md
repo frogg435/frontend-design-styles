@@ -43,7 +43,7 @@ description: 前端界面设计风格的实现与还原助手，覆盖 Xiaomi MI
 
 **Step 4 · 搭组件。** 按 `references/components-playbook.md` 里该风格的组件规格实现（按钮变体、输入框、卡片、导航、弹层、开关、列表）。每个交互态（hover / focus / pressed / selected / disabled）都要有，不能只做默认态。
 
-**Step 5 · 加动效 + 自检。** 按 `references/motion-and-accessibility.md` 补齐过渡，然后逐条过自检清单（见下）。
+**Step 5 · 加动效 + 自检。** 按 `references/motion-and-accessibility.md` 补齐过渡，然后跑 `python3 scripts/lint_tokens.py <产物> --style <风格>`，再逐条过自检清单（见下）。
 
 ## 铁律
 
@@ -57,8 +57,9 @@ description: 前端界面设计风格的实现与还原助手，覆盖 Xiaomi MI
 ## 交付规范
 
 - 默认产出**单文件可运行的 HTML**（内联 `<style>` + `<script>`），令牌以 `:root` CSS 变量组织，方便用户直接预览和复制。
-- 用户指定框架时再切换：React → CSS Modules 或 CSS-in-JS 令牌对象；Tailwind → `@theme` 令牌；Vue → 单文件组件；Compose → 对应 `ColorScheme` / `Typography` / `Shapes` 映射。
+- 用户指定框架时再切换，映射规则见 `references/framework-mappings.md`：Tailwind 用 `assets/mappings/tailwind.css`；React/Vue 用令牌对象 + CSS 变量；Compose 优先用官方库（MIUIX 用 `MiuixTheme`，M3 用 `MaterialTheme`）。
 - 组件演示页可参考 `assets/templates/showcase.html`（同一套组件在四种风格下的并列呈现，可切换主题与明暗）。
+- **产出后必跑校验**：`python3 scripts/lint_tokens.py <产物文件> --style <风格>`，三项检查（硬编码色值 / 对比度 / 核心令牌）不通过就修，再交付。
 - 交付时说明：用了哪套体系、有哪些刻意偏离、暗色模式如何切换、字体回退栈是什么。
 
 ## 自检清单
@@ -88,3 +89,6 @@ description: 前端界面设计风格的实现与还原助手，覆盖 Xiaomi MI
 | `references/fluent-2.md` | 中性色/品牌色阶 + Type Ramp + 控件尺寸 + Mica/Acrylic + 阴影令牌 |
 | `references/components-playbook.md` | 按钮/输入/卡片/导航/弹层/开关/列表 的逐风格实现规格 |
 | `references/motion-and-accessibility.md` | 四体系动效曲线与时长、无障碍硬性要求、审查清单 |
+| `references/framework-mappings.md` | Tailwind / React / Vue / Compose / SwiftUI 的令牌映射规则 |
+| `scripts/lint_tokens.py` | 可执行校验：硬编码色值、对比度、核心令牌齐全性 |
+| `assets/mappings/tailwind.css` | Tailwind v4 `@theme` 令牌映射，四套体系可同页共存 |

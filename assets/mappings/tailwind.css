@@ -1,0 +1,121 @@
+/* ==========================================================================
+   Tailwind CSS v4 映射 —— 四套设计语言
+   用法：在入口 CSS 里 `@import "tailwindcss";` 之后 `@import` 本文件。
+   Tailwind v4 会为 `--color-<name>` 自动生成 `bg-<name>` / `text-<name>` /
+   `border-<name>` 等工具类，为 `--radius-<name>` 生成 `rounded-<name>`，
+   为 `--font-<name>` 生成 `font-<name>`。
+
+   四套体系同页共存时，用前缀区分：
+     bg-mi-primary  bg-ap-tint  bg-md-primary  bg-fl-brand
+   只用其中一套时，把不用的块删掉即可。
+   明暗切换：本文件只映射亮色。暗色请搭配 assets/tokens/*.css，
+   并用 `@theme inline` 让工具类直接引用语义变量（见下方注释）。
+   ========================================================================== */
+
+@theme {
+  /* ---------- MIUIX / HyperOS ---------- */
+  --color-mi-primary: #3482FF;
+  --color-mi-on-primary: #FFFFFF;
+  --color-mi-primary-container: #5D9BFF;
+  --color-mi-secondary: #E6E6E6;
+  --color-mi-tertiary-container: #EAF2FF;
+  --color-mi-on-tertiary-container: #3482FF;
+  --color-mi-error: #E94634;
+  --color-mi-background: #FFFFFF;
+  --color-mi-surface: #F7F7F7;
+  --color-mi-surface-container: #FFFFFF;
+  --color-mi-surface-container-high: #E8E8E8;
+  --color-mi-on-surface: #000000;
+  --color-mi-outline: #D9D9D9;
+  --radius-mi-control: 16px;
+  --radius-mi-card: 16px;
+  --radius-mi-sheet: 24px;
+  --radius-mi-pill: 999px;
+  --font-mi: "MiSans", "MiSans VF", "HarmonyOS Sans SC", "PingFang SC", "Noto Sans SC", sans-serif;
+
+  /* ---------- Apple HIG ---------- */
+  --color-ap-tint: #007AFF;
+  --color-ap-red: #FF3B30;
+  --color-ap-green: #34C759;
+  --color-ap-orange: #FF9500;
+  --color-ap-label: #000000;
+  --color-ap-label-secondary: rgba(60, 60, 67, 0.60);
+  --color-ap-label-tertiary: rgba(60, 60, 67, 0.30);
+  --color-ap-bg: #FFFFFF;
+  --color-ap-bg-secondary: #F2F2F7;
+  --color-ap-bg-tertiary: #FFFFFF;
+  --color-ap-fill: rgba(120, 120, 128, 0.20);
+  --color-ap-separator: rgba(60, 60, 67, 0.29);
+  --radius-ap-control: 10px;
+  --radius-ap-card: 12px;
+  --radius-ap-sheet: 16px;
+  --font-ap: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "PingFang SC", sans-serif;
+
+  /* ---------- Material Design 3 ---------- */
+  --color-md-primary: #6750A4;
+  --color-md-on-primary: #FFFFFF;
+  --color-md-primary-container: #EADDFF;
+  --color-md-secondary-container: #E8DEF8;
+  --color-md-on-secondary-container: #1D192B;
+  --color-md-tertiary-container: #FFD8E4;
+  --color-md-error: #B3261E;
+  --color-md-surface: #FFFBFE;
+  --color-md-on-surface: #1C1B1F;
+  --color-md-surface-variant: #E7E0EC;
+  --color-md-on-surface-variant: #49454F;
+  --color-md-surface-container-low: #F7F2FA;
+  --color-md-surface-container: #F3EDF7;
+  --color-md-surface-container-high: #ECE6F0;
+  --color-md-surface-container-highest: #E6E0E9;
+  --color-md-outline: #79747E;
+  --color-md-outline-variant: #CAC4D0;
+  --radius-md-card: 12px;
+  --radius-md-fab: 16px;
+  --radius-md-dialog: 28px;
+  --radius-md-full: 9999px;
+  --font-md: "Roboto Flex", Roboto, "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+
+  /* ---------- Fluent 2 ---------- */
+  --color-fl-brand: #0F6CBD;
+  --color-fl-brand-hover: #115EA3;
+  --color-fl-brand-pressed: #0C3B5E;
+  --color-fl-danger: #C50F1F;
+  --color-fl-success: #107C10;
+  --color-fl-neutral-fg1: #242424;
+  --color-fl-neutral-fg2: #424242;
+  --color-fl-neutral-fg3: #616161;
+  --color-fl-neutral-fg-disabled: #BDBDBD;
+  --color-fl-neutral-bg1: #FFFFFF;
+  --color-fl-neutral-bg2: #FAFAFA;
+  --color-fl-neutral-bg3: #F5F5F5;
+  --color-fl-neutral-stroke1: #D1D1D1;
+  --color-fl-neutral-stroke2: #E0E0E0;
+  --color-fl-subtle-hover: #F5F5F5;
+  --radius-fl-control: 4px;
+  --radius-fl-card: 6px;
+  --radius-fl-flyout: 8px;
+  --font-fl: "Segoe UI Variable Text", "Segoe UI", "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+  --font-fl-display: "Segoe UI Variable Display", "Segoe UI", "Microsoft YaHei", sans-serif;
+
+  /* ---------- 各体系自有的间距/阴影令牌 ---------- */
+  --shadow-fl-2: 0 1px 2px rgba(0,0,0,0.14), 0 0 2px rgba(0,0,0,0.12);
+  --shadow-fl-16: 0 8px 16px rgba(0,0,0,0.14), 0 0 2px rgba(0,0,0,0.12);
+  --shadow-md-1: 0 1px 2px rgba(0,0,0,0.30), 0 1px 3px 1px rgba(0,0,0,0.15);
+  --shadow-md-3: 0 1px 3px rgba(0,0,0,0.30), 0 4px 8px 3px rgba(0,0,0,0.15);
+  --shadow-ap-1: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-mi-1: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+/*
+ * 暗色模式接入：
+ * Tailwind v4 的 `dark:` 前缀默认基于 `prefers-color-scheme`。要让语义令牌随主题切换，
+ * 推荐做法是让工具类引用变量而非写死的值，即用 `@theme inline` + 在 :root 上定义变量：
+ *
+ *   @theme inline {
+ *     --color-md-primary: var(--md-primary);
+ *   }
+ *
+ * 这样 `bg-md-primary` 会输出 `background-color: var(--md-primary)`，
+ * 明暗值由 assets/tokens/material-3.css 的 [data-theme="dark"] 决定。
+ * 四套体系都按这个方式接入即可，本文件的写死值仅作为亮色默认。
+ */
