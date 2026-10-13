@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>设置页 · 四种设计语言实现</title>
+<style>
+/* ==========================================================================
+   真实页面示例：同一个设置页，四种设计语言。
+   与 showcase.html 的区别在于这里演示的是「组合」——版式、分组、层级、响应式，
+   而不只是一批孤立组件。
+
+   结构约定：
+     #app 承载 [data-style] 与 [data-theme]，令牌作用域挂在它上面。
+     组件类名用 .s-* 通用语义类，四种风格各自接管样式。
+   ========================================================================== */
+:root {
+  --shell-bg: #0E0F12; --shell-line: #26272E; --shell-line-hover: #3A3C45;
+  --shell-text: #F2F3F5; --shell-muted: #8B8F9A; --shell-accent: #6C7BFF;
+  --shell-bg-translucent: rgba(14, 15, 18, 0.82);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--shell-bg); color: var(--shell-text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+               "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  -webkit-font-smoothing: antialiased; line-height: 1.5;
+}
+.toolbar {
+  position: sticky; top: 0; z-index: 40;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+  padding: 12px 20px;
+  background: var(--shell-bg-translucent);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--shell-line);
+}
+.toolbar strong { font-size: 14px; font-weight: 600; }
+.toolbar .hint { font-size: 12px; color: var(--shell-muted); }
+.spacer { margin-left: auto; }
+.seg { display: flex; gap: 6px; flex-wrap: wrap; }
+.seg button {
+  font: inherit; font-size: 12px; font-weight: 500;
+  padding: 6px 13px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--shell-line); background: transparent; color: var(--shell-muted);
+  transition: all 160ms cubic-bezier(0.2,0,0,1);
+}
+.seg button:hover { color: var(--shell-text); border-color: var(--shell-line-hover); }
+.seg button[aria-pressed="true"] { background: var(--shell-accent); border-color: var(--shell-accent); color: #fff; }
+.mode-btn {
+  font: inherit; font-size: 13px; width: 34px; height: 34px; border-radius: 10px;
+  border: 1px solid var(--shell-line); background: transparent; color: var(--shell-text); cursor: pointer;
+}
+.mode-btn:hover { border-color: var(--shell-line-hover); }
+
+#app { min-height: 100vh; padding: 28px 16px 64px; transition: background 200ms; }
+.page { max-width: 680px; margin: 0 auto; display: grid; gap: 18px; }
+
+/* ==========================================================================
+   1. MIUIX / HyperOS  ——  16dp 统一圆角 + 色阶分层
+   ========================================================================== */
+#app[data-style="miuix"] {
+  --mi-primary:#3482FF; --mi-on-primary:#FFFFFF; --mi-primary-variant:#3482FF;
+  --mi-secondary:#E6E6E6; --mi-on-secondary-variant:#303030;
+  --mi-tertiary-container:#EAF2FF; --mi-on-tertiary-container:#3482FF;
+  --mi-error:#E94634; --mi-error-container:#FDF6F4; --mi-on-error-container:#410002;
+  --mi-background:#FFFFFF; --mi-on-background:#000000;
+  --mi-surface:#F7F7F7; --mi-on-surface:#000000; --mi-surface-variant:#FFFFFF;
+  --mi-on-surface-secondary:rgba(0,0,0,0.80); --mi-on-surface-variant-summary:rgba(0,0,0,0.60);
+  --mi-on-surface-variant-actions:rgba(0,0,0,0.40);
+  --mi-disabled-on-surface:#B2B2B2; --mi-outline:#D9D9D9; --mi-divider-line:#E0E0E0;
+  --mi-radius-control:16px; --mi-radius-card:16px;
+  --mi-font:"MiSans","MiSans VF","HarmonyOS Sans SC","PingFang SC","Noto Sans SC",sans-serif;
+  --mi-duration-normal:250ms; --mi-easing-standard:cubic-bezier(0.4,0,0.2,1);
+  background: var(--mi-surface); color: var(--mi-on-background);
+}
+/* 暗色下 HyperOS 页面底是 #242424（surface 退为纯黑），设置页底色随之切换 */
+#app[data-style="miuix"][data-theme="dark"] {
+  --mi-primary:#277AF7; --mi-primary-variant:#0073DD;
+  --mi-secondary:#505050; --mi-on-secondary-variant:#D9D9D9;
+  --mi-tertiary-container:#2B3B54; --mi-on-tertiary-container:#4788FF;
+  --mi-error:#F12522; --mi-error-container:#2E0603; --mi-on-error-container:#FFDAD6;
+  --mi-background:#242424; --mi-on-background:rgba(255,255,255,0.90);
+  --mi-surface:#000000; --mi-on-surface:#F2F2F2; --mi-surface-variant:#242424;
+  --mi-on-surface-secondary:rgba(255,255,255,0.80); --mi-on-surface-variant-summary:rgba(255,255,255,0.50);
+  --mi-on-surface-variant-actions:rgba(255,255,255,0.40);
+  --mi-disabled-on-surface:#666666; --mi-outline:#404040; --mi-divider-line:#393939;
+}
+#app[data-style="miuix"] .s-h1 { font: 600 32px/1.25 var(--mi-font); margin: 0 0 4px; }
+#app[data-style="miuix"] .s-sub { font: 400 14px/1.6 var(--mi-font); color: var(--mi-on-surface-variant-summary); margin: 0; }
+#app[data-style="miuix"] .s-card {
+  background: var(--mi-surface-variant); border-radius: var(--mi-radius-card);
+  border: 1px solid var(--mi-divider-line); padding: 4px 0; overflow: hidden;
+}
+#app[data-style="miuix"] .s-card > h2 {
+  font: 600 15px/1.4 var(--mi-font); color: var(--mi-on-surface-variant-summary);
+  margin: 12px 16px 8px; letter-spacing: 0;
+}
+#app[data-style="miuix"] .s-profile { display: flex; align-items: center; gap: 14px; padding: 16px; }
+#app[data-style="miuix"] .s-avatar {
+  width: 56px; height: 56px; border-radius: 50%; flex: none;
+  background: var(--mi-tertiary-container); color: var(--mi-on-tertiary-container);
+  display: grid; place-content: center; font: 600 20px var(--mi-font);
+}
+#app[data-style="miuix"] .s-name { font: 500 17px/1.4 var(--mi-font); }
+#app[data-style="miuix"] .s-desc { font: 400 13px/1.5 var(--mi-font); color: var(--mi-on-surface-variant-summary); }
+#app[data-style="miuix"] .s-row {
+  display: flex; align-items: center; gap: 12px; padding: 13px 16px;
+  border-top: 1px solid var(--mi-divider-line); font-family: var(--mi-font);
+  min-height: 52px;
+}
+#app[data-style="miuix"] .s-row:first-child, #app[data-style="miuix"] .s-profile + .s-row { border-top: none; }
+#app[data-style="miuix"] .s-row > .s-title { font-size: 16px; }
+#app[data-style="miuix"] .s-row > .s-value { margin-left: auto; font-size: 14px; color: var(--mi-on-surface-variant-summary); }
+#app[data-style="miuix"] .s-chevron { margin-left: auto; color: var(--mi-on-surface-variant-actions); font-size: 16px; }
+#app[data-style="miuix"] .s-row:has(.s-chevron) > .s-value { margin-left: auto; }
+#app[data-style="miuix"] .s-row:has(.s-value) .s-chevron { margin-left: 0; }
+#app[data-style="miuix"] .s-switch { position: relative; width: 52px; height: 32px; flex: none; margin-left: auto; }
+#app[data-style="miuix"] .s-switch input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+#app[data-style="miuix"] .s-switch span {
+  position: absolute; inset: 0; border-radius: 999px; background: var(--mi-secondary);
+  transition: background var(--mi-duration-normal) var(--mi-easing-standard); pointer-events: none;
+}
+#app[data-style="miuix"] .s-switch span::after {
+  content: ""; position: absolute; top: 4px; left: 4px; width: 24px; height: 24px;
+  border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  transition: transform var(--mi-duration-normal) var(--mi-easing-standard);
+}
+#app[data-style="miuix"] .s-switch input:checked + span { background: var(--mi-primary); }
+#app[data-style="miuix"] .s-switch input:checked + span::after { transform: translateX(20px); }
+#app[data-style="miuix"] .s-seg { display: inline-flex; gap: 4px; padding: 4px; border-radius: 999px; background: var(--mi-surface); }
+#app[data-style="miuix"] .s-seg button {
+  font: 500 14px var(--mi-font); border: none; cursor: pointer; padding: 7px 16px;
+  border-radius: 999px; background: transparent; color: var(--mi-on-surface-variant-summary);
+  transition: all var(--mi-duration-normal) var(--mi-easing-standard);
+}
+#app[data-style="miuix"] .s-seg button[aria-pressed="true"] {
+  background: var(--mi-surface-variant); color: var(--mi-on-surface); box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+#app[data-style="miuix"] .s-btn {
+  font: 500 16px var(--mi-font); height: 40px; min-width: 58px; padding: 0 20px;
+  border: none; cursor: pointer; border-radius: var(--mi-radius-control);
+  transition: transform 120ms var(--mi-easing-standard), background var(--mi-duration-normal);
+}
+#app[data-style="miuix"] .s-btn:active { transform: scale(0.96); }
+#app[data-style="miuix"] .s-btn--primary { background: var(--mi-primary); color: var(--mi-on-primary); }
+#app[data-style="miuix"] .s-btn--danger { background: transparent; color: var(--mi-error); }
+#app[data-style="miuix"] .s-foot { display: flex; gap: 12px; justify-content: center; padding-top: 8px; }
+
+/* ==========================================================================
+   2. Apple HIG  ——  内缩分组列表 + 材质
+   ========================================================================== */
+#app[data-style="apple"] {
+  --ap-tint:#007AFF; --ap-red:#FF3B30; --ap-green:#34C759;
+  --ap-label:#000000; --ap-label-2:rgba(60,60,67,0.60); --ap-label-3:rgba(60,60,67,0.30);
+  --ap-bg:#FFFFFF; --ap-bg-2:#F2F2F7; --ap-bg-3:#FFFFFF;
+  --ap-fill:rgba(120,120,128,0.20); --ap-fill-3:rgba(118,118,128,0.12);
+  --ap-separator:rgba(60,60,67,0.29);
+  --ap-radius-card:12px; --ap-radius-control:10px;
+  --ap-font:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Helvetica Neue",sans-serif;
+  --ap-duration-normal:250ms; --ap-easing-standard:cubic-bezier(0.25,0.1,0.25,1);
+  background: var(--ap-bg-2); color: var(--ap-label);
+}
+#app[data-style="apple"][data-theme="dark"] {
+  --ap-tint:#0A84FF; --ap-red:#FF453A; --ap-green:#30D158;
+  --ap-label:#FFFFFF; --ap-label-2:rgba(235,235,245,0.60); --ap-label-3:rgba(235,235,245,0.30);
+  --ap-bg:#000000; --ap-bg-2:#1C1C1E; --ap-bg-3:#2C2C2E;
+  --ap-fill:rgba(120,120,128,0.36); --ap-fill-3:rgba(118,118,128,0.24);
+  --ap-separator:rgba(84,84,88,0.60);
+}
+#app[data-style="apple"] .s-h1 { font: 700 34px/1.2 var(--ap-font); margin: 0 0 4px; letter-spacing: -0.5px; }
+#app[data-style="apple"] .s-sub { font: 400 15px/1.5 var(--ap-font); color: var(--ap-label-2); margin: 0 0 4px; }
+#app[data-style="apple"] .s-card { background: var(--ap-bg-3); border-radius: var(--ap-radius-card); overflow: hidden; }
+#app[data-style="apple"] .s-card > h2 {
+  font: 400 13px/1.4 var(--ap-font); color: var(--ap-label-2);
+  margin: 0 0 7px; padding: 0 16px; text-transform: uppercase; letter-spacing: 0.3px;
+}
+#app[data-style="apple"] .s-profile { display: flex; align-items: center; gap: 14px; padding: 14px 16px; }
+#app[data-style="apple"] .s-avatar {
+  width: 58px; height: 58px; border-radius: 50%; flex: none;
+  background: var(--ap-fill); color: var(--ap-tint);
+  display: grid; place-content: center; font: 600 22px var(--ap-font);
+}
+#app[data-style="apple"] .s-name { font: 400 20px/1.3 var(--ap-font); }
+#app[data-style="apple"] .s-desc { font: 400 15px/1.4 var(--ap-font); color: var(--ap-label-2); }
+#app[data-style="apple"] .s-row {
+  display: flex; align-items: center; gap: 12px; padding: 11px 16px;
+  border-top: 1px solid var(--ap-separator); font-family: var(--ap-font); min-height: 44px;
+}
+#app[data-style="apple"] .s-row:first-child, #app[data-style="apple"] .s-profile + .s-row { border-top: none; }
+#app[data-style="apple"] .s-row > .s-title { font-size: 17px; }
+#app[data-style="apple"] .s-row > .s-value { margin-left: auto; font-size: 17px; color: var(--ap-label-2); }
+#app[data-style="apple"] .s-chevron { margin-left: auto; color: var(--ap-label-3); font-size: 16px; }
+#app[data-style="apple"] .s-row:has(.s-value) .s-chevron { margin-left: 6px; }
+#app[data-style="apple"] .s-switch { position: relative; width: 51px; height: 31px; flex: none; margin-left: auto; }
+#app[data-style="apple"] .s-switch input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+#app[data-style="apple"] .s-switch span {
+  position: absolute; inset: 0; border-radius: 999px; background: var(--ap-fill);
+  transition: background var(--ap-duration-normal) var(--ap-easing-standard); pointer-events: none;
+}
+#app[data-style="apple"] .s-switch span::after {
+  content: ""; position: absolute; top: 2px; left: 2px; width: 27px; height: 27px;
+  border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  transition: transform var(--ap-duration-normal) var(--ap-easing-standard);
+}
+#app[data-style="apple"] .s-switch input:checked + span { background: var(--ap-green); }
+#app[data-style="apple"] .s-switch input:checked + span::after { transform: translateX(20px); }
+#app[data-style="apple"] .s-seg { display: inline-flex; padding: 2px; border-radius: 9px; background: var(--ap-fill-3); gap: 2px; }
+#app[data-style="apple"] .s-seg button {
+  font: 500 13px var(--ap-font); border: none; cursor: pointer; padding: 6px 15px;
+  border-radius: 7px; background: transparent; color: var(--ap-label);
+  transition: background var(--ap-duration-normal) var(--ap-easing-standard);
+}
+#app[data-style="apple"] .s-seg button[aria-pressed="true"] { background: var(--ap-bg); box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+#app[data-style="apple"] .s-btn {
+  font: 600 17px var(--ap-font); height: 46px; padding: 0 20px; border: none; cursor: pointer;
+  border-radius: var(--ap-radius-control); transition: opacity 150ms var(--ap-easing-standard);
+}
+#app[data-style="apple"] .s-btn--primary { background: var(--ap-tint); color: #fff; }
+#app[data-style="apple"] .s-btn--primary:active { opacity: 0.7; }
+#app[data-style="apple"] .s-btn--danger { background: transparent; color: var(--ap-red); }
+#app[data-style="apple"] .s-foot { display: flex; gap: 12px; justify-content: center; padding-top: 8px; }
+
+/* ==========================================================================
+   3. Material Design 3  ——  色调叠加 + 状态层
+   ========================================================================== */
+#app[data-style="material"] {
+  --md-primary:#6750A4; --md-on-primary:#FFFFFF; --md-primary-container:#EADDFF; --md-on-primary-container:#21005D;
+  --md-secondary-container:#E8DEF8; --md-on-secondary-container:#1D192B;
+  --md-error:#B3261E; --md-error-container:#F9DEDC; --md-on-error-container:#410E0B;
+  --md-surface:#FFFBFE; --md-on-surface:#1C1B1F; --md-surface-variant:#E7E0EC; --md-on-surface-variant:#49454F;
+  --md-surface-container-low:#F7F2FA; --md-surface-container:#F3EDF7; --md-surface-container-highest:#E6E0E9;
+  --md-outline:#79747E; --md-outline-variant:#CAC4D0;
+  --md-shape-md:12px; --md-shape-full:9999px;
+  --md-shadow-1:0 1px 2px rgba(0,0,0,0.30),0 1px 3px 1px rgba(0,0,0,0.15);
+  --md-font:"Roboto Flex",Roboto,"Noto Sans SC","PingFang SC",system-ui,sans-serif;
+  --md-duration-medium2:300ms; --md-easing-standard:cubic-bezier(0.2,0,0,1);
+  background: var(--md-surface); color: var(--md-on-surface);
+}
+#app[data-style="material"][data-theme="dark"] {
+  --md-primary:#D0BCFF; --md-on-primary:#381E72; --md-primary-container:#4F378B; --md-on-primary-container:#EADDFF;
+  --md-secondary-container:#4A4458; --md-on-secondary-container:#E8DEF8;
+  --md-error:#F2B8B5; --md-error-container:#8C1D18; --md-on-error-container:#F9DEDC;
+  --md-surface:#1C1B1F; --md-on-surface:#E6E1E5; --md-surface-variant:#49454F; --md-on-surface-variant:#CAC4D0;
+  --md-surface-container-low:#1D1B20; --md-surface-container:#211F26; --md-surface-container-highest:#36343B;
+  --md-outline:#938F99; --md-outline-variant:#49454F;
+}
+#app[data-style="material"] .s-h1 { font: 400 32px/1.25 var(--md-font); margin: 0 0 6px; }
+#app[data-style="material"] .s-sub { font: 400 14px/1.5 var(--md-font); letter-spacing: 0.25px; color: var(--md-on-surface-variant); margin: 0; }
+#app[data-style="material"] .s-card {
+  background: var(--md-surface-container-low); border-radius: var(--md-shape-md);
+  padding: 4px 0; overflow: hidden;
+}
+#app[data-style="material"] .s-card > h2 {
+  font: 500 14px/1.4 var(--md-font); letter-spacing: 0.1px;
+  color: var(--md-primary); margin: 14px 16px 8px;
+}
+#app[data-style="material"] .s-profile { display: flex; align-items: center; gap: 16px; padding: 16px; }
+#app[data-style="material"] .s-avatar {
+  width: 56px; height: 56px; border-radius: 50%; flex: none;
+  background: var(--md-primary-container); color: var(--md-on-primary-container);
+  display: grid; place-content: center; font: 500 20px var(--md-font);
+}
+#app[data-style="material"] .s-name { font: 500 16px/1.4 var(--md-font); letter-spacing: 0.15px; }
+#app[data-style="material"] .s-desc { font: 400 14px/1.4 var(--md-font); color: var(--md-on-surface-variant); }
+#app[data-style="material"] .s-row {
+  display: flex; align-items: center; gap: 16px; padding: 12px 16px;
+  font-family: var(--md-font); min-height: 52px;
+  transition: background var(--md-duration-medium2) var(--md-easing-standard);
+}
+#app[data-style="material"] .s-row:hover { background: rgba(0,0,0,0.08); }
+#app[data-style="material"] .s-row > .s-title { font-size: 16px; font-weight: 500; letter-spacing: 0.15px; }
+#app[data-style="material"] .s-row > .s-value { margin-left: auto; font-size: 14px; color: var(--md-on-surface-variant); }
+#app[data-style="material"] .s-chevron { margin-left: auto; color: var(--md-on-surface-variant); font-size: 16px; }
+#app[data-style="material"] .s-row:has(.s-value) .s-chevron { margin-left: 6px; }
+#app[data-style="material"] .s-switch { position: relative; width: 52px; height: 32px; flex: none; margin-left: auto; }
+#app[data-style="material"] .s-switch input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+#app[data-style="material"] .s-switch span {
+  position: absolute; inset: 0; border-radius: var(--md-shape-full);
+  background: var(--md-surface-variant); border: 2px solid var(--md-outline);
+  transition: all var(--md-duration-medium2) var(--md-easing-standard); pointer-events: none;
+}
+#app[data-style="material"] .s-switch span::after {
+  content: ""; position: absolute; top: 50%; left: 6px; transform: translateY(-50%);
+  width: 16px; height: 16px; border-radius: 50%; background: var(--md-outline);
+  transition: all var(--md-duration-medium2) var(--md-easing-standard);
+}
+#app[data-style="material"] .s-switch input:checked + span { background: var(--md-primary); border-color: var(--md-primary); }
+#app[data-style="material"] .s-switch input:checked + span::after { left: 26px; width: 24px; height: 24px; background: var(--md-on-primary); }
+#app[data-style="material"] .s-seg {
+  display: inline-flex; border-radius: var(--md-shape-full); overflow: hidden;
+  background: var(--md-surface-container); border: 1px solid var(--md-outline-variant);
+}
+#app[data-style="material"] .s-seg button {
+  font: 500 14px var(--md-font); border: none; cursor: pointer; padding: 8px 18px;
+  background: transparent; color: var(--md-on-surface-variant);
+  transition: all var(--md-duration-medium2) var(--md-easing-standard);
+}
+#app[data-style="material"] .s-seg button[aria-pressed="true"] {
+  background: var(--md-secondary-container); color: var(--md-on-secondary-container); border-radius: var(--md-shape-full);
+}
+#app[data-style="material"] .s-btn {
+  font: 500 14px/20px var(--md-font); letter-spacing: 0.1px; height: 40px; padding: 0 24px;
+  border: none; cursor: pointer; border-radius: var(--md-shape-full);
+  transition: box-shadow var(--md-duration-medium2) var(--md-easing-standard);
+}
+#app[data-style="material"] .s-btn--primary { background: var(--md-primary); color: var(--md-on-primary); }
+#app[data-style="material"] .s-btn--primary:hover { box-shadow: var(--md-shadow-1); }
+#app[data-style="material"] .s-btn--danger { background: transparent; color: var(--md-error); }
+#app[data-style="material"] .s-foot { display: flex; gap: 12px; justify-content: center; padding-top: 8px; }
+
+/* ==========================================================================
+   4. Fluent 2  ——  小圆角 + 描边 + 紧凑密度
+   ========================================================================== */
+#app[data-style="fluent"] {
+  --fl-brand:#0F6CBD; --fl-brand-hover:#115EA3; --fl-brand-pressed:#0C3B5E;
+  --fl-danger:#C50F1F; --fl-danger-fg:#B10E1C; --fl-danger-subtle:#FDF3F4;
+  --fl-neutral-bg1:#FFFFFF; --fl-neutral-bg2:#FAFAFA; --fl-neutral-bg3:#F5F5F5;
+  --fl-neutral-fg1:#242424; --fl-neutral-fg2:#424242; --fl-neutral-fg3:#616161; --fl-neutral-fg-disabled:#BDBDBD;
+  --fl-neutral-stroke1:#D1D1D1; --fl-neutral-stroke2:#E0E0E0;
+  --fl-subtle-hover:#F5F5F5;
+  --fl-control-stroke-bottom:rgba(0,0,0,0.16);
+  --fl-radius-medium:4px; --fl-radius-large:6px;
+  --fl-shadow-2:0 1px 2px rgba(0,0,0,0.14),0 0 2px rgba(0,0,0,0.12);
+  --fl-font:"Segoe UI Variable Text","Segoe UI","Microsoft YaHei","PingFang SC",system-ui,sans-serif;
+  --fl-duration-normal:200ms; --fl-curve-easy-ease:cubic-bezier(0.33,0,0.67,1);
+  background: var(--fl-neutral-bg2); color: var(--fl-neutral-fg1);
+}
+#app[data-style="fluent"][data-theme="dark"] {
+  --fl-brand:#115EA3; --fl-brand-hover:#0F6CBD; --fl-brand-pressed:#0C3B5E;
+  --fl-danger:#C50F1F; --fl-danger-fg:#DC626D; --fl-danger-subtle:#3B0509;
+  --fl-neutral-bg1:#292929; --fl-neutral-bg2:#1F1F1F; --fl-neutral-bg3:#141414;
+  --fl-neutral-fg1:#FFFFFF; --fl-neutral-fg2:#D6D6D6; --fl-neutral-fg3:#ADADAD; --fl-neutral-fg-disabled:#5C5C5C;
+  --fl-neutral-stroke1:#666666; --fl-neutral-stroke2:#525252;
+  --fl-subtle-hover:#383838;
+  --fl-control-stroke-bottom:rgba(255,255,255,0.12);
+}
+#app[data-style="fluent"] .s-h1 { font: 600 28px/1.3 var(--fl-font); margin: 0 0 6px; }
+#app[data-style="fluent"] .s-sub { font: 400 14px/20px var(--fl-font); color: var(--fl-neutral-fg2); margin: 0; }
+#app[data-style="fluent"] .s-card {
+  background: var(--fl-neutral-bg1); border: 1px solid var(--fl-neutral-stroke2);
+  border-radius: var(--fl-radius-large); box-shadow: var(--fl-shadow-2);
+  padding: 4px 0; overflow: hidden;
+}
+#app[data-style="fluent"] .s-card > h2 {
+  font: 600 14px/20px var(--fl-font); color: var(--fl-neutral-fg2); margin: 12px 12px 8px;
+}
+#app[data-style="fluent"] .s-profile { display: flex; align-items: center; gap: 12px; padding: 14px 12px; }
+#app[data-style="fluent"] .s-avatar {
+  width: 48px; height: 48px; border-radius: 50%; flex: none;
+  background: var(--fl-brand); color: #fff;
+  display: grid; place-content: center; font: 600 18px var(--fl-font);
+}
+#app[data-style="fluent"] .s-name { font: 600 16px/22px var(--fl-font); }
+#app[data-style="fluent"] .s-desc { font: 400 12px/16px var(--fl-font); color: var(--fl-neutral-fg3); }
+#app[data-style="fluent"] .s-row {
+  display: flex; align-items: center; gap: 12px; padding: 8px 12px;
+  border-top: 1px solid var(--fl-neutral-stroke2); font-family: var(--fl-font); min-height: 40px;
+  transition: background var(--fl-duration-normal) var(--fl-curve-easy-ease);
+}
+#app[data-style="fluent"] .s-row:first-child, #app[data-style="fluent"] .s-profile + .s-row { border-top: none; }
+#app[data-style="fluent"] .s-row:hover { background: var(--fl-subtle-hover); }
+#app[data-style="fluent"] .s-row > .s-title { font-size: 14px; }
+#app[data-style="fluent"] .s-row > .s-value { margin-left: auto; font-size: 12px; color: var(--fl-neutral-fg3); }
+#app[data-style="fluent"] .s-chevron { margin-left: auto; color: var(--fl-neutral-fg3); font-size: 14px; }
+#app[data-style="fluent"] .s-row:has(.s-value) .s-chevron { margin-left: 6px; }
+#app[data-style="fluent"] .s-switch { position: relative; width: 40px; height: 20px; flex: none; margin-left: auto; }
+#app[data-style="fluent"] .s-switch input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+#app[data-style="fluent"] .s-switch span {
+  position: absolute; inset: 0; border-radius: 10px; background: var(--fl-neutral-bg1);
+  border: 1px solid var(--fl-neutral-stroke1); transition: all var(--fl-duration-normal) var(--fl-curve-easy-ease);
+  pointer-events: none;
+}
+#app[data-style="fluent"] .s-switch span::after {
+  content: ""; position: absolute; top: 50%; left: 3px; transform: translateY(-50%);
+  width: 12px; height: 12px; border-radius: 50%; background: var(--fl-neutral-fg3);
+  transition: all var(--fl-duration-normal) var(--fl-curve-easy-ease);
+}
+#app[data-style="fluent"] .s-switch input:checked + span { background: var(--fl-brand); border-color: var(--fl-brand); }
+#app[data-style="fluent"] .s-switch input:checked + span::after { left: 21px; width: 14px; height: 14px; background: #fff; }
+#app[data-style="fluent"] .s-seg { display: inline-flex; border-bottom: 1px solid var(--fl-neutral-stroke2); }
+#app[data-style="fluent"] .s-seg button {
+  position: relative; font: 600 14px var(--fl-font); border: none; background: transparent; cursor: pointer;
+  color: var(--fl-neutral-fg3); padding: 8px 16px 10px;
+  transition: color var(--fl-duration-normal) var(--fl-curve-easy-ease);
+}
+#app[data-style="fluent"] .s-seg button:hover { color: var(--fl-neutral-fg1); }
+#app[data-style="fluent"] .s-seg button[aria-pressed="true"] { color: var(--fl-neutral-fg1); }
+#app[data-style="fluent"] .s-seg button[aria-pressed="true"]::after {
+  content: ""; position: absolute; left: 12px; right: 12px; bottom: -1px; height: 2px;
+  border-radius: 1px; background: var(--fl-brand);
+}
+#app[data-style="fluent"] .s-btn {
+  font: 600 14px var(--fl-font); height: 32px; padding: 0 12px; cursor: pointer;
+  border-radius: var(--fl-radius-medium); border: 1px solid transparent;
+  border-bottom-color: var(--fl-control-stroke-bottom);
+  transition: background var(--fl-duration-normal) var(--fl-curve-easy-ease);
+}
+#app[data-style="fluent"] .s-btn--primary { background: var(--fl-brand); color: #fff; }
+#app[data-style="fluent"] .s-btn--primary:hover { background: var(--fl-brand-hover); }
+#app[data-style="fluent"] .s-btn--primary:active { background: var(--fl-brand-pressed); }
+#app[data-style="fluent"] .s-btn--danger { background: var(--fl-neutral-bg1); color: var(--fl-danger-fg); border-color: var(--fl-neutral-stroke1); }
+#app[data-style="fluent"] .s-foot { display: flex; gap: 12px; justify-content: center; padding-top: 8px; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <strong>设置页 · 四种设计语言</strong>
+  <span class="hint">同一份结构，四套令牌</span>
+  <div class="spacer"></div>
+  <div class="seg" id="styleSeg">
+    <button data-style="miuix" aria-pressed="true">MIUIX</button>
+    <button data-style="apple" aria-pressed="false">Apple</button>
+    <button data-style="material" aria-pressed="false">Material 3</button>
+    <button data-style="fluent" aria-pressed="false">Fluent 2</button>
+  </div>
+  <button class="mode-btn" id="modeBtn" title="切换明暗模式" aria-label="切换明暗模式">◐</button>
+</div>
+
+<div id="app" data-style="miuix" data-theme="light">
+  <div class="page">
+    <header>
+      <h1 class="s-h1">设置</h1>
+      <p class="s-sub">管理账号、外观与通知偏好</p>
+    </header>
+
+    <section class="s-card">
+      <h2>账号</h2>
+      <div class="s-profile">
+        <div class="s-avatar" aria-hidden="true">设</div>
+        <div>
+          <div class="s-name">设计工作台</div>
+          <div class="s-desc">design@example.com</div>
+        </div>
+      </div>
+      <div class="s-row"><span class="s-title">账号与安全</span><span class="s-value">已开启双重验证</span><span class="s-chevron" aria-hidden="true">›</span></div>
+      <div class="s-row"><span class="s-title">订阅方案</span><span class="s-value">专业版 · 2026-12 到期</span><span class="s-chevron" aria-hidden="true">›</span></div>
+    </section>
+
+    <section class="s-card">
+      <h2>外观</h2>
+      <div class="s-row">
+        <span class="s-title">界面语言</span>
+        <span class="s-value">简体中文</span>
+        <span class="s-chevron" aria-hidden="true">›</span>
+      </div>
+      <div class="s-row">
+        <span class="s-title">强调色</span>
+        <div class="s-seg" role="group" aria-label="强调色">
+          <button aria-pressed="true">跟随系统</button>
+          <button aria-pressed="false">自定义</button>
+        </div>
+      </div>
+      <div class="s-row">
+        <span class="s-title">紧凑布局</span>
+        <label class="s-switch"><input type="checkbox" aria-label="紧凑布局"><span></span></label>
+      </div>
+    </section>
+
+    <section class="s-card">
+      <h2>通知</h2>
+      <div class="s-row">
+        <span class="s-title">推送通知</span>
+        <label class="s-switch"><input type="checkbox" checked aria-label="推送通知"><span></span></label>
+      </div>
+      <div class="s-row">
+        <span class="s-title">免打扰时段</span>
+        <span class="s-value">23:00 – 07:00</span>
+        <span class="s-chevron" aria-hidden="true">›</span>
+      </div>
+      <div class="s-row">
+        <span class="s-title">邮件摘要</span>
+        <label class="s-switch"><input type="checkbox" aria-label="邮件摘要"><span></span></label>
+      </div>
+    </section>
+
+    <div class="s-foot">
+      <button class="s-btn s-btn--primary">保存更改</button>
+      <button class="s-btn s-btn--danger">退出登录</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* 风格切换：只换 #app 上的 data-style，整页令牌随之替换 */
+document.getElementById('styleSeg').addEventListener('click', e => {
+  const b = e.target.closest('button[data-style]');
+  if (!b) return;
+  [...e.currentTarget.children].forEach(x => x.setAttribute('aria-pressed', x === b));
+  document.getElementById('app').dataset.style = b.dataset.style;
+});
+document.querySelectorAll('.s-seg').forEach(seg => {
+  seg.addEventListener('click', e => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    [...seg.children].forEach(x => x.setAttribute('aria-pressed', x === b));
+  });
+});
+document.getElementById('modeBtn').addEventListener('click', () => {
+  const app = document.getElementById('app');
+  app.dataset.theme = app.dataset.theme === 'dark' ? 'light' : 'dark';
+});
+</script>
+</body>
+</html>
